@@ -1,7 +1,6 @@
 import { Express } from "express";
-import { createLecturerSchema,} from "../schema/lecturer-schema";
+import { createLecturerSchema,} from "./schema/lecturer-schema";
 
-const openapi = require ("../schema/lecturer-schema")
 
 import validateResource from "./middleware/validateResource";
 
@@ -21,7 +20,7 @@ function routes(app: Express): void {
      *            content:
      *                application/json:
      *                  schema:
-     *                    "$ref": "#/components"
+     *                    "$ref": "#/components/schemas/CreateLecturerRequest"
      *            description: Záznam lektora úspěšně vytvořen (rovněž vytvořeny nové tagy, pokud ještě neexistovaly
      *      requestBody:
      *         required: true
@@ -29,7 +28,7 @@ function routes(app: Express): void {
      *         content:
      *           application/json:
      *             schema:
-     *               "$ref": "#/components/schemas/CreateLecturerRequest"  
+     *               $ref: "#/components/schemas/CreateLecturerRequest"  
      */
     app.post("/lecturers", validateResource(createLecturerSchema));
     
