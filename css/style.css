@@ -1,0 +1,155 @@
+body {
+    background-color: #333333;
+    margin: 0;
+    height: 100%;
+    overflow: auto;
+}
+
+h1{
+    color: #FFFFFF;
+    font-family: 'Lalezar';
+    font-size: 40px;
+
+    width: max-content;
+    margin: 7px;
+
+    display: inline-block;
+}
+
+h2 {
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    font-size: 30px;
+
+    width: max-content;
+    margin: 5px;
+
+    display: inline-block;
+}
+
+h3 {
+    color: rgba(51, 51, 51, 0.4);
+    font-family: 'Open Sans';
+    font-size: 20px;
+
+    width: max-content;
+}
+
+.header {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    position: relative;
+    background-color: skyblue;
+}
+
+
+
+
+#content-container {
+    position: relative;
+
+    width: 100%;
+    height: 90%;
+
+    display: grid;
+    grid-template-columns: 700px auto;
+}
+
+#main-info-container {
+    position: inherit;
+    background-color: skyblue;
+    width: 700px;
+    height: fit-content;
+
+    top: 30px;
+    left: 30px;
+    overflow: hidden;
+    
+    border-radius: 10px;
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+#teacher-image {
+    position: relative;
+    background-color: #00384D;
+    content: url(https://tourdeapp.cz/storage/images/2023_02_25/412ff296a291f021bbb6de10e8d0b94863fa89308843b/big.png.webp);
+
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
+#teacher-name {
+    position: relative;
+    margin-left: 10px;
+    height: min-content;
+}
+
+#teacher-claim {
+    position: relative;
+    padding: 0px 10px;
+    height: min-content;
+
+    margin-top: 0px;
+    margin-bottom: 17px;
+}
+
+
+
+
+
+#secondary-info-container {
+    position: relative;
+    margin-right: 30px;
+    margin-left: 30px;
+    box-sizing: border-box;
+    padding-right: 30px;
+    height: fit-content;
+    top: 30px;
+    left: 30px;
+}
+
+#desc-container {
+    position: relative;
+    background-color: skyblue;
+    width: 100%;
+    height: 600px;
+
+    overflow: hidden;
+    
+    border-radius: 10px;
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+#tags-container {
+    position: relative;
+    width: 100%;
+    height: fit-content;;
+    margin-top: 30px;
+
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.tag {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 15px;
+
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding: 5px 10px;
+
+    background-color: skyblue;
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
+
+    color: #FFFFFF;
+    font-family: 'Lalezar';
+    font-weight: bolder;
+    font-size: 25px;
+}
