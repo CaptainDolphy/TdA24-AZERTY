@@ -6,6 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install --omit=dev
+RUN npm run start
 
 ENV PORT=80
 
