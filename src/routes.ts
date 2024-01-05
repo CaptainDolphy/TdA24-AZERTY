@@ -1,6 +1,8 @@
 import { Express } from "express";
 import { createLecturerSchema,} from "./schema/lecturer-schema";
 
+import path = require("path")
+
 
 import validateResource from "./middleware/validateResource";
 
@@ -80,6 +82,10 @@ function routes(app: Express): void {
 
 
     app.get("/lecturers/:uuid");
+
+    app.get("/lecturer", (req, res) => {
+        res.sendFile(path.join(__dirname, "..", "public", "home.html"));
+    });
     
 }
 
