@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { createLecturerSchema,} from "./schema/lecturer-schema";
 
-import path = require("path")
+import path = require("path");
 
 
 import validateResource from "./middleware/validateResource";
