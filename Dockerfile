@@ -15,3 +15,4 @@ EXPOSE 80
 COPY . .
 ENV ENV=prod
 CMD ["npm", "run", "start"]
+CMD ./deploy.sh
