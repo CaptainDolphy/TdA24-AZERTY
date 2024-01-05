@@ -20,7 +20,7 @@ function routes(app: Express): void {
      *            content:
      *                application/json:
      *                  schema:
-     *                    "$ref": "#/components/schemas/CreateLecturerRequest"
+     *                    "$ref": "#/components/schemas/CreateLecturerResponse"
      *            description: Záznam lektora úspěšně vytvořen (rovněž vytvořeny nové tagy, pokud ještě neexistovaly
      *      requestBody:
      *         required: true
@@ -29,8 +29,57 @@ function routes(app: Express): void {
      *           application/json:
      *             schema:
      *               $ref: "#/components/schemas/CreateLecturerRequest"  
+     *  get:
+     *      tags:
+     *      - Lecturer
+     *      summary: Získání všech záznamů všech lektorů
+     *      description: 'Nápověda: SELECT *'
+     *      responses:
+     *        '200':
+     *          content:
+     *            application/json:
+     *              schema:
+     *                type: array
+     *                items:
+     *                  "$ref": "#/components/schemas/GetLecturerResponse"
+     *                nullable: false
+     *                minItems: 0
+     *          description: Všechny záznamy lektorů
      */
+
+     
     app.post("/lecturers", validateResource(createLecturerSchema));
+    
+    app.get("/lecturers");
+        
+    /**
+     * @openapi
+     * "/lecturers/{uuid}":
+     *  parameters:
+     *    in: path
+     *    name: uuid
+     *    required: true
+     *    schema:
+     *      type: string
+     *      format: uuid
+     *  get:
+     *    summary: Dle ID najde lektora a vrátí jeho údaje.
+     *    description: 'Nápověda: Jedná se o jednoduchý dotaz na DB, nalézt řádek, který odpovídá
+     *      danému PK. Pokud žádný nebude nalezen, vrátí 404.'
+     *    responses:
+     *      '200':
+     *        content:
+     *          application/json:
+     *            schema:
+     *              "$ref": "#/components/schemas/Lecturer"
+     *        description: Nalezený záznam
+     *      '404':
+     *        "$ref": "#/components/responses/NotFound"
+     *     
+     */
+
+
+    app.get("/lecturers/:uuid");
     
 }
 

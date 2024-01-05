@@ -81,6 +81,60 @@ import { object, string, TypeOf } from "zod";
  *      required:
  *      - first_name
  *      - last_name
+ *    CreateLecturerResponse:
+ *      type: object
+ *      properties:
+ *        uuid:
+ *          type: string
+ *        title_before:
+ *          type: string
+ *        first_name:
+ *          type: string
+ *        middle_name:
+ *          type: string
+ *        last_name:
+ *          type: string
+ *        title_after:
+ *          type: string 
+ *    GetLecturerResponse:
+ *      type: array
+ *      items:
+ *        type: object
+ *        required:
+ *          - uuid
+ *          - first_name
+ *          - middle_name
+ *          - last_name
+ *        properties:
+ *          uuid:
+ *            type: string
+ *          title_before:
+ *            type: string
+ *          first_name:
+ *            type: string
+ *          middle_name:
+ *            type: string
+ *          last_name:
+ *            type: string
+ *          title_after:
+ *            type: string
+ *          picture_url:
+ *            type: string
+ *          location:
+ *            type: string
+ *          claim:
+ *            type: string
+ *          bio:
+ *            type: string
+ *          tags:
+ *            type: array
+ *            items:
+ *              "$ref": "#/components/schemas/Tag"
+ *          price_per_hour:
+ *            type: integer
+ *          contact:
+ *            "$ref": "#/components/schemas/Contact_info"
+ *                
  */
 
 export const createLecturerSchema = object ({

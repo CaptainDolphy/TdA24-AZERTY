@@ -1,7 +1,8 @@
 import express from "express";
 import config from "config";
-import swaggerDocs from "../swagger";
-import routes from "./routes";
+import swaggerDocs from "./swagger";
+import routes from "./src/routes";
+import connect  from "./utils/connect";
 
 
 const port = config.get<number>("port");
@@ -15,7 +16,9 @@ app.use(express.json());
 app.listen(port, async () => {
     console.log(`App is running at https://localhost:${port}`);
 
-    routes(app)
+    connect();
+
+    routes(app);
 
     swaggerDocs(app, port);
 });
