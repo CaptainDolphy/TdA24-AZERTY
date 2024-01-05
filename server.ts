@@ -4,7 +4,7 @@ import swaggerDocs from "./swagger";
 import routes from "./src/routes";
 import connect  from "./utils/connect";
 
-import cors from 'cors';
+import cors from "cors";
 
 
 const port = config.get<number>("port");

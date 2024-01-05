@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install --omit=dev
-
+RUN docker compose up -d --build
 
 ENV PORT=80
 
