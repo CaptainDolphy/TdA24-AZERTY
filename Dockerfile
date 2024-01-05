@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install --omit=dev
-RUN npm run start
+
 
 ENV PORT=80
 
@@ -14,4 +14,4 @@ EXPOSE 80
 
 COPY . .
 ENV ENV=prod
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
