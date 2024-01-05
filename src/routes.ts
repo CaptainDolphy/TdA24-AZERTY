@@ -84,6 +84,7 @@ function routes(app: Express): void {
     app.get("/lecturers/:uuid");
 
     app.get("/lecturer", (req, res) => {
+        res.header('Content-type', 'text/html');
         res.sendFile(path.join(__dirname, "..", "public", "home.html"));
     });
     
