@@ -94,7 +94,6 @@ h4 {
 #teacher-image {
     position: relative;
     background-color: #00384D;
-    content: url(https://tourdeapp.cz/storage/images/2023_02_25/412ff296a291f021bbb6de10e8d0b94863fa89308843b/big.png.webp);
 
     display: block;
     object-fit: cover;
@@ -182,7 +181,6 @@ h4 {
     font-weight: bolder;
     font-size: 25px;
 }
-
 
 
 
