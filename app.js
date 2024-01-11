@@ -4,8 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var lecturerRouter = require('./routes/lecturer');
-var indexRouter = require('./routes/index');
+// setting the sqlite to verbose debugging mode (https://github.com/TryGhost/node-sqlite3/wiki/Debugging)
+const sqlite3 = require('sqlite3').verbose();
+// creates database with fileneme db.sqlite in directory './data/'
+const fs = require("node:fs");
+if(!fs.existsSync(path.join(__dirname, 'data'))){
+  // create data directory if it does not exist
+  fs.mkdirSync(path.join(__dirname, 'data'));
+}
+const db = new sqlite3.Database(path.join(__dirname, 'data','db.sqlite'));
+
+var lecturersRouter = require(path.join(__dirname, 'routes', 'lecturers'));
+var indexRouter = require(path.join(__dirname, 'routes', 'index'));
 
 var app = express();
 
@@ -20,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/lecturer', lecturerRouter);
+app.use('/lecturers', lecturersRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
@@ -39,4 +49,23 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+var sqlTable = `CREATE TABLE IF NOT EXISTS lecturers(
+  [uuid] TEXT,
+  [title_before] TEXT,
+  [first_name] TEXT,
+  [middle_name] TEXT,
+  [last_name] TEXT,
+  [title_after] TEXT,
+  [picture_url] TEXT,
+  [location] TEXT,
+  [claim] TEXT,
+  [bio] TEXT,
+  [tags] BLOB,
+  [price_per_hour] INT,
+  [contact] BLOB
+)`
+
+db.run(sqlTable);
+
 module.exports = app;
+exports.db = db;
