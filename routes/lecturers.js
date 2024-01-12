@@ -102,13 +102,13 @@ router.get('/:uuid', async function (req, res) {
         if(lecturer) {
           res.json(lecturer);
           res.status(200);
-          else {
-            res.json({
-              "code": 404,
-              "message": "User not found"
-            });
-            res.status(404);
-          }
+        }
+        else {
+          res.json({
+            "code": 404,
+            "message": "User not found"
+          });
+          res.status(404);
         }
       } 
     });    
