@@ -90,6 +90,8 @@ router.get('/:uuid', async function (req, res) {
 
   var lecturer;
 
+  var lecturerFound = false;
+
   app.db.all(sql, [], (err, rows) => {
 
     rows.forEach(row => {
@@ -99,21 +101,21 @@ router.get('/:uuid', async function (req, res) {
         lecturer.tags = JSON.parse(lecturer.tags);
         lecturer.contact = JSON.parse(lecturer.contact);
 
+        lecturerFound = true;
       } 
     }); 
+    if(lecturerFound) {
+      res.status(200);
+      res.json(lecturer);
+    }
+    else {
+      res.status(404);
+      res.json({
+        "code": 404,
+        "message": "User not found"
+      });
+    }
   }); 
-
-  if(lecturer) {
-    res.status(200);
-    res.json(lecturer);
-  }
-  else {
-    res.status(404);
-    res.json({
-      "code": 404,
-      "message": "User not found"
-    });
-  }
 });
 
 module.exports = router;
