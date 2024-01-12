@@ -84,7 +84,7 @@ router.get('/', async function (req, res) {
 });
 
 router.get('/:uuid', async function (req, res) {
-  var uuid = req.params.uuid;
+  var URLuuid = req.params.uuid;
 
   sql = `SELECT * FROM lecturers`;
 
@@ -93,7 +93,7 @@ router.get('/:uuid', async function (req, res) {
     var lecturer;
 
     rows.forEach(row => {
-      if(row.uuid = uuid) {
+      if(row.uuid == URLuuid) {
         lecturer = row;
 
         lecturer.tags = JSON.parse(lecturer.tags);
