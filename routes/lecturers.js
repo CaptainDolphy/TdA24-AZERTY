@@ -88,9 +88,9 @@ router.get('/:uuid', async function (req, res) {
 
   sql = `SELECT * FROM lecturers`;
 
-  app.db.all(sql, [], (err, rows) => {
+  var lecturer;
 
-    var lecturer;
+  app.db.all(sql, [], (err, rows) => {
 
     rows.forEach(row => {
       if(row.uuid == URLuuid) {
@@ -101,19 +101,19 @@ router.get('/:uuid', async function (req, res) {
 
       } 
     }); 
-    
-    if(lecturer) {
-      res.json(lecturer);
-      res.status(200);
-    }
-    else {
-      res.json({
-        "code": 404,
-        "message": "User not found"
-      });
-      res.status(404);
-    }
   }); 
+
+  if(lecturer) {
+    res.status(200);
+    res.json(lecturer);
+  }
+  else {
+    res.status(404);
+    res.json({
+      "code": 404,
+      "message": "User not found"
+    });
+  }
 });
 
 module.exports = router;
