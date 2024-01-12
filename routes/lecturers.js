@@ -10,8 +10,6 @@ const sqlite3 = require('sqlite3').verbose();
 router.post('/', async function (req, res) {
   var lecturer = req.body;
 
-  var status = 200;
-
   //check if lecturer has all necessary data
   if ("first_name" in lecturer && "last_name" in lecturer && lecturer.first_name != "" && lecturer.first_name != null && lecturer.last_name != "" && lecturer.last_name != null) {
     lecturer.uuid = uuid();
@@ -95,7 +93,9 @@ router.get('/:uuid', async function (req, res) {
   app.db.all(sql, [], (err, rows) => {
 
     rows.forEach(row => {
+      console.log(row.uuid)
       if(row.uuid == URLuuid) {
+
         lecturer = row;
 
         lecturer.tags = JSON.parse(lecturer.tags);
@@ -116,6 +116,28 @@ router.get('/:uuid', async function (req, res) {
       });
     }
   }); 
+});
+
+
+router.delete('/:uuid', async function (req, res) {
+  var URLuuid = req.params.uuid;
+
+  sql = `DELETE FROM lecturers WHERE uuid=(?)`;
+
+  app.db.run(sql, URLuuid, (err) => {
+    if(err) {
+      console.error(err)
+      res.status(404);
+      res.json({
+        "code": 404,
+        "message": "User not found"
+      });
+    }
+    else {
+      res.status(204);
+      console.log(`Successfully deleted lecturer with uuid: ${URLuuid}`)
+    }
+  })
 });
 
 module.exports = router;
