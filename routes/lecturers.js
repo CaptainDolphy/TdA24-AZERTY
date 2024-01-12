@@ -99,19 +99,20 @@ router.get('/:uuid', async function (req, res) {
         lecturer.tags = JSON.parse(lecturer.tags);
         lecturer.contact = JSON.parse(lecturer.contact);
 
-        if(lecturer) {
-          res.json(lecturer);
-          res.status(200);
-        }
-        else {
-          res.json({
-            "code": 404,
-            "message": "User not found"
-          });
-          res.status(404);
-        }
       } 
-    });    
+    }); 
+    
+    if(lecturer) {
+      res.json(lecturer);
+      res.status(200);
+    }
+    else {
+      res.json({
+        "code": 404,
+        "message": "User not found"
+      });
+      res.status(404);
+    }
   }); 
 });
 
