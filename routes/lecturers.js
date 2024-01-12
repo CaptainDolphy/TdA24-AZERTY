@@ -7,7 +7,7 @@ var { v4: uuid } = require('uuid');
 
 const sqlite3 = require('sqlite3').verbose();
 
-router.post('/', async function (req, res, next) {
+router.post('/', async function (req, res) {
   var lecturer = req.body;
 
   var status = 200;
@@ -57,16 +57,6 @@ router.post('/', async function (req, res, next) {
       else console.log(`Successfully added lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
     })
 
-    sql = `SELECT * FROM lecturers`;
-
-    /*
-    app.db.all(sql, [], (err, rows) => {
-      rows.forEach(row => {
-        console.log(row)
-      });
-    }); 
-    */
-
     res.json(lecturer);
     res.status(200);
   }
@@ -74,6 +64,16 @@ router.post('/', async function (req, res, next) {
     res.status(400);
     res.json(lecturer);
   }
+});
+
+router.get('/', async function (req, res) {
+  sql = `SELECT * FROM lecturers`;
+
+  app.db.all(sql, [], (err, rows) => {
+    res.json(rows);
+    res.status(200);
+  }); 
+
 });
 
 module.exports = router;
