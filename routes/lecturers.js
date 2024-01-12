@@ -71,6 +71,12 @@ router.get('/', async function (req, res) {
   sql = `SELECT * FROM lecturers`;
 
   app.db.all(sql, [], (err, rows) => {
+
+    rows.forEach(row => {
+      row.tags = JSON.parse(row.tags);
+      row.contact = JSON.parse(row.contact);
+    });
+
     res.json(rows);
     res.status(200);
   }); 
@@ -89,6 +95,9 @@ router.get('/:uuid', async function (req, res) {
     rows.forEach(row => {
       if(row.uuid = uuid) {
         lecturer = row;
+
+        lecturer.tags = JSON.parse(lecturer.tags);
+        lecturer.contact = JSON.parse(lecturer.contact);
       } 
     });
 
@@ -103,7 +112,6 @@ router.get('/:uuid', async function (req, res) {
       });
       res.status(404);
     }
-
   }); 
 });
 
