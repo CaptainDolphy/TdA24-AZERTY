@@ -67,6 +67,7 @@ router.post('/', async function (req, res) {
 });
 
 router.get('/', async function (req, res) {
+
   sql = `SELECT * FROM lecturers`;
 
   app.db.all(sql, [], (err, rows) => {
@@ -74,6 +75,36 @@ router.get('/', async function (req, res) {
     res.status(200);
   }); 
 
+});
+
+router.get('/:uuid', async function (req, res) {
+  var uuid = req.params.uuid;
+
+  sql = `SELECT * FROM lecturers`;
+
+  app.db.all(sql, [], (err, rows) => {
+
+    var lecturer;
+
+    rows.forEach(row => {
+      if(row.uuid = uuid) {
+        lecturer = row;
+      } 
+    });
+
+    if(lecturer) {
+      res.json(lecturer);
+      res.status(200);
+    }
+    else {
+      res.json({
+        "code": 404,
+        "message": "User not found"
+      });
+      res.status(404);
+    }
+
+  }); 
 });
 
 module.exports = router;
