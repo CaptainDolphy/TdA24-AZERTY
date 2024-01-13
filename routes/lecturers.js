@@ -51,9 +51,9 @@ router.post('/', async function (req, res) {
       lecturer.price_per_hour,
       JSON.stringify(lecturer.contact)
     ], (err) => {
-      if (err) console.error(err)
+      if (err) console.error(err);
       else console.log(`Successfully added lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
-    })
+    });
 
     res.json(lecturer);
     res.status(200);
@@ -77,7 +77,7 @@ router.get('/', async function (req, res) {
 
     res.json(rows);
     res.status(200);
-  }); 
+  });
 
 });
 
@@ -93,7 +93,7 @@ router.get('/:uuid', async function (req, res) {
   app.db.all(sql, [], (err, rows) => {
 
     rows.forEach(row => {
-      if(row.uuid == URLuuid) {
+      if (row.uuid == URLuuid) {
 
         lecturer = row;
 
@@ -101,9 +101,9 @@ router.get('/:uuid', async function (req, res) {
         lecturer.contact = JSON.parse(lecturer.contact);
 
         lecturerFound = true;
-      } 
-    }); 
-    if(lecturerFound) {
+      }
+    });
+    if (lecturerFound) {
       res.status(200);
       res.json(lecturer);
     }
@@ -114,17 +114,17 @@ router.get('/:uuid', async function (req, res) {
         "message": "User not found"
       });
     }
-  }); 
+  });
 });
 
 
 router.delete('/:uuid', async function (req, res) {
   var URLuuid = req.params.uuid;
 
-  sql = `DELETE FROM lecturers WHERE uuid="${URLuuid}"`;
+  sql = `DELETE FROM lecturers WHERE uuid=?`;
 
-  app.db.run(sql, [], (err) => {
-    if(err) {
+  app.db.run(sql, [URLuuid], (err) => {
+    if (err) {
       console.error(err)
       res.status(404);
       res.json({
@@ -137,7 +137,88 @@ router.delete('/:uuid', async function (req, res) {
       res.json({});
       console.log(`Successfully deleted lecturer with uuid: ${URLuuid}`)
     }
+  });
+});
+
+
+router.put('/:uuid', async function (req, res) {
+  var URLuuid = req.params.uuid;
+
+  sql = `SELECT * FROM lecturers WHERE uuid=?`;
+
+  app.db.all(sql, [URLuuid], (err, lecturer) => {
+    if (err || lecturer == "") {
+      if (err) console.error(err);
+      res.status(404);
+      res.json({
+        "code": 404,
+        "message": "User not found"
+      });
+    }
+    else {
+      lecturer = lecturer[0];
+      for (const key in req.body) {
+        if (key != "uuid" || key in lecturer) {
+          lecturer[key] = req.body[key];
+        }
+      }
+
+      sql = `DELETE FROM lecturers WHERE uuid=?`;
+
+      app.db.run(sql, [URLuuid], (err) => {
+        if (err) console.log(err);
+      });
+
+      sqlInsert = `INSERT INTO lecturers(
+        [uuid],
+        [title_before],
+        [first_name],
+        [middle_name],
+        [last_name],
+        [title_after],
+        [picture_url],
+        [location],
+        [claim],
+        [bio],
+        [tags],
+        [price_per_hour],
+        [contact]
+      ) VALUES (
+        ?,?,?,?,?,?,?,?,?,?,?,?,?
+      )`;
+
+      app.db.run(sqlInsert, [
+        lecturer.uuid,
+        lecturer.title_before,
+        lecturer.first_name,
+        lecturer.middle_name,
+        lecturer.last_name,
+        lecturer.title_after,
+        lecturer.picture_url,
+        lecturer.location,
+        lecturer.claim,
+        lecturer.bio,
+        JSON.stringify(lecturer.tags),
+        lecturer.price_per_hour,
+        JSON.stringify(lecturer.contact)
+      ], (err) => {
+        if (err) console.error(err);
+        else console.log(`Successfully updated lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
+      });
+
+      res.json(lecturer);
+      res.status(204);
+    }
   })
+
+  /*app.db.run(sql, [], (err) => {
+    if(err) {
+      console.log(err);
+    }
+    else {
+
+    }
+  })*/
 });
 
 module.exports = router;
