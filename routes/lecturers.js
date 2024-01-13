@@ -93,7 +93,6 @@ router.get('/:uuid', async function (req, res) {
   app.db.all(sql, [], (err, rows) => {
 
     rows.forEach(row => {
-      console.log(row.uuid)
       if(row.uuid == URLuuid) {
 
         lecturer = row;
@@ -122,9 +121,9 @@ router.get('/:uuid', async function (req, res) {
 router.delete('/:uuid', async function (req, res) {
   var URLuuid = req.params.uuid;
 
-  sql = `DELETE FROM lecturers WHERE uuid=(?)`;
+  sql = `DELETE FROM lecturers WHERE uuid="${URLuuid}"`;
 
-  app.db.run(sql, URLuuid, (err) => {
+  app.db.run(sql, [], (err) => {
     if(err) {
       console.error(err)
       res.status(404);
@@ -135,6 +134,7 @@ router.delete('/:uuid', async function (req, res) {
     }
     else {
       res.status(204);
+      res.json({});
       console.log(`Successfully deleted lecturer with uuid: ${URLuuid}`)
     }
   })
