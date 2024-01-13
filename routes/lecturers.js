@@ -121,11 +121,11 @@ router.get('/:uuid', async function (req, res) {
 router.delete('/:uuid', async function (req, res) {
   var URLuuid = req.params.uuid;
 
-  sql = `DELETE FROM lecturers WHERE uuid=?`;
+  sql = `SELECT * FROM lecturers WHERE uuid=?`;
 
-  app.db.run(sql, [URLuuid], (err) => {
-    if (err) {
-      console.error(err)
+  app.db.all(sql, [URLuuid], (err, lecturer) => {
+    if (err || lecturer == "") {
+      if (err) console.error(err);
       res.status(404);
       res.json({
         "code": 404,
@@ -133,14 +133,21 @@ router.delete('/:uuid', async function (req, res) {
       });
     }
     else {
-      res.status(204);
-      res.json({});
-      console.log(`Successfully deleted lecturer with uuid: ${URLuuid}`)
+      sql = `DELETE FROM lecturers WHERE uuid=?`;
+
+      app.db.run(sql, [URLuuid], (err) => {
+        if (err) {
+          console.error(err)
+        }
+        else {
+          res.status(204);
+          res.json({});
+          console.log(`Successfully deleted lecturer with uuid: ${URLuuid}`)
+        }
+      });
     }
   });
 });
-
-
 router.put('/:uuid', async function (req, res) {
   var URLuuid = req.params.uuid;
 
@@ -161,7 +168,7 @@ router.put('/:uuid', async function (req, res) {
         if (key != "uuid" || key in lecturer || key != "tags") {
           lecturer[key] = req.body[key];
         }
-        if(key == "tags") {
+        if (key == "tags") {
           lecturer.tags = req.body.tags;
           lecturer.tags.forEach(tag => {
             tag.uuid = uuid();
@@ -215,14 +222,14 @@ router.put('/:uuid', async function (req, res) {
       res.json(lecturer);
       res.status(204);
     }
-  })
+  });
 
   /*app.db.run(sql, [], (err) => {
     if(err) {
       console.log(err);
     }
     else {
-
+ 
     }
   })*/
 });
