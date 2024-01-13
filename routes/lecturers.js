@@ -158,8 +158,14 @@ router.put('/:uuid', async function (req, res) {
     else {
       lecturer = lecturer[0];
       for (const key in req.body) {
-        if (key != "uuid" || key in lecturer) {
+        if (key != "uuid" || key in lecturer || key != "tags") {
           lecturer[key] = req.body[key];
+        }
+        if(key == "tags") {
+          lecturer.tags = req.body.tags;
+          lecturer.tags.forEach(tag => {
+            tag.uuid = uuid();
+          });
         }
       }
 
