@@ -66,8 +66,8 @@ h4 {
 
 #tda-logo {
     position: absolute;
+    bottom: 0;
     right: 0;
-    top: 740px;
     margin: 10px;
     background-color: transparent;
 

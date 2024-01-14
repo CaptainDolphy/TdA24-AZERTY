@@ -38,3 +38,5 @@ node-gyp/
 # yarn.lock
 
 data/
+
+test.http
