@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.getJSON('http://localhost:3000/api/lecturers').done(function(data) {
+    $.getJSON(`http://${location.hostname}:3000/api/lecturers`).done(function(data) {
         $.each(data, function(i) {
 
             $('#lecturer-list').append(`
