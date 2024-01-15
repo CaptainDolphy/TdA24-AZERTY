@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.getJSON(`http://${location.hostname}/api/lecturers/${uuid} `).done(function(data) {
+    $.getJSON(`http://${location.host}/api/lecturers/${uuid} `).done(function(data) {
             $('body').append(`
                 <div class='lecturer' id='${data.uuid}'> 
                     <div id="content-container"> 
