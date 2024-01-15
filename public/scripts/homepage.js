@@ -1,7 +1,6 @@
 $(document).ready(function () {
-    $.getJSON(`http://${location.hostname}:3000/api/lecturers`).done(function(data) {
+    $.getJSON(`http://${location.hostname}/api/lecturers`).done(function(data) {
         $.each(data, function(i) {
-
             $('#lecturer-list').append(`
                 <div class='lecturer' id='${data[i].uuid}' onclick="window.location='/lecturer/${data[i].uuid}';"> 
                     <div id="content-container"> 
