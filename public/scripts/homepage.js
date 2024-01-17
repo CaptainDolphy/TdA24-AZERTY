@@ -80,23 +80,27 @@ $(document).ready(function () {
 
             data.forEach(function (i) {
 
-                // Check for price
-                if(!(i.price_per_hour < $("#slider-range").slider("values", 0)) && !(i.price_per_hour > $("#slider-range").slider("values", 1))) {
-                    filtered.push(i.uuid);
-                }
+                var validPrice = false;
+                var validTags = false;
+                var validLocs = false;
 
+                // Check for price
+                validPrice = (!(i.price_per_hour < $("#slider-range").slider("values", 0)) && !(i.price_per_hour > $("#slider-range").slider("values", 1))) ? true : false
+                
                 // Check for tags
                 selTags=[]
                 $.each($('#tagSelect').select2('data'), function(j) {
                     selTags.push($('#tagSelect').select2('data')[j].text)
-            
                 })
                 $.each(i.tags[0], function(j) {
-                    if (selTags.includes((i.tags[0][j]),0)) {
-                        filtered.push(i.uuid);
-                    };
+                    valid = (selTags.includes((i.tags[0][j]),0)) ? true : false
+                    if (valid){
+                        validTags = true;
+                    }
                 });
-
+                if (selTags == "") {
+                    validTags = true;
+                }
                 // Check location
 
                 selLocs=[]
@@ -104,9 +108,17 @@ $(document).ready(function () {
                     selLocs.push($('#locSelect').select2('data')[j].text)
                 })
                 
-                if (selLocs.includes((i.location),0)) {
+                validLocs = (selLocs.includes((i.location),0)) ? true : false
+                
+                if (selLocs == "") {
+                    validLocs = true;
+                }
+                
+                //Check for intersetion and filter
+
+                if (validPrice && validTags && validLocs) {
                     filtered.push(i.uuid);
-                };
+                }
 
             })
             
