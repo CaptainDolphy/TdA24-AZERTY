@@ -1,6 +1,22 @@
 $(document).ready(function () {
     $.getJSON(`http://${location.host}/api/lecturers`).done(function(data) {
         $.each(data, function(i) {
+        
+        
+        
+        
+            data[i].title_before = (data[i].title_before == null)       ? ""            : data[i].title_before
+            data[i].middle_name = (data[i].middle_name == null)         ? ""            : data[i].middle_name 
+            data[i].title_after = (data[i].title_after == null)         ? ""            : data[i].title_after 
+            data[i].location = (data[i].location == null)               ? "Unspecified" : data[i].location
+            data[i].claim = (data[i].claim == null)                     ? ""            : data[i].claim  
+            data[i].price_per_hour = (data[i].price_per_hour == null)   ? "Unspecified" : data[i].price_per_hour
+                 
+            data[i].tags = (data[i].tags == null) ? "" : data[i].tags
+            
+            
+            
+            
             $('#lecturer-list').append(`
                 <div class='lecturer' id='${data[i].uuid}' onclick="window.location='/lecturer/${data[i].uuid}';"> 
                     <div id="content-container"> 
@@ -26,15 +42,22 @@ $(document).ready(function () {
                 `)
 
             // Location Options
-            
-            $('#locSelect').append(`<option value="${data[i].location}">${data[i].location}</option>`)
+            if ($(`#locSelect #${data[i].location}`).length == 0) {
+                $('#locSelect').append(`<option id="${data[i].location}" value="${data[i].location}">${data[i].location}</option>`)
+            }
 
             // Tag Options + Display on card
     
             $.each(data[i].tags[0], function(j) {
                 $(`#${data[i].uuid} #tags-container`).append(`<div class="tag">${data[i].tags[0][j]}</div>`);
-                $('#tagSelect').append(`<option value="${data[i].tags[0][j]}">${data[i].tags[0][j]}</option>`);
+                if ($(`#tagSelect #${data[i].tags[0][j]}`).length == 0) {
+                    $('#tagSelect').append(`<option id="${data[i].tags[0][j]}" value="${data[i].tags[0][j]}">${data[i].tags[0][j]}</option>`);
+                }
+                // Remove uuid tag from view 
+                $(`#${data[i].uuid} #tags-container`).find(`div:contains(${data[i].tags[0].uuid})`).remove()
+                $(`#tagSelect`).find(`:contains(${data[i].tags[0].uuid})`).remove()
             });
+
         
             
         });
