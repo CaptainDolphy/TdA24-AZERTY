@@ -39,6 +39,8 @@ $(document).ready(function () {
                     `)
             $.each(data.tags[0], function(j) {
                 $(`#${data.uuid} #tags-container`).append(`<div class="tag">${data.tags[0][j]}</div>`)
+
+                $(`#${data.uuid} #tags-container`).find(`div:contains(${data.tags[0].uuid})`).remove()
             }); 
         });       
     });
