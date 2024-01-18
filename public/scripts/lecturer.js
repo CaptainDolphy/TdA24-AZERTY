@@ -12,7 +12,7 @@ $(document).ready(function () {
                 <br></br>
                 `)
             $(`#${data.uuid} #main-info-container`).append(`        
-                    <img id="teacher-image" src="${data.picture_url}" alt="image of the lecturer">  \
+                    <img id="teacher-image" src="${data.picture_url}" alt="Image of the lecturer">  \
                     <div></div> 
                     <a class="page-link" href="/api/lecturers/${data.uuid}">${data.uuid}</a> 
                     <div id="teacher-name"> 

@@ -110,6 +110,13 @@ h4 {
     position: relative;
     background-color: #00384D;
 
+    background-image: url("/images/TdA-icons/SVG/TdA_ikony_studium_white.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    color: #FFFFFF;
+    font-family: 'Lalezar';
+
     display: block;
     object-fit: cover;
     width: 100%;
