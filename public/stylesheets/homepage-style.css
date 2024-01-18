@@ -3,10 +3,11 @@ body {
     margin: 0;
     height: 100%;
     overflow: auto;
+    overflow-x: hidden;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-h1{
+h1 {
     color: #FFFFFF;
     font-family: 'Lalezar';
     font-size: 20px;
@@ -47,12 +48,20 @@ h4 {
     width: max-content;
 }
 
-#location {
-    position: relative;
-    display: flex;
-    align-items: center;
-    
+#uuid {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 10px;
+    color: white;
+    opacity: 0.3;
+    font-size: 10px;
 }
+
+
+
+
+
 select {
     width: 300px;
 }
@@ -67,56 +76,145 @@ select {
     background-color: skyblue;
 }
 
-#filters {
+#filters-container {
+    top: 50px;
     position: relative;
-    height: 100px;
+    height: fit-content;
+    min-height: 100px;
+    width: 90%;
+    min-width: 1000px;
 
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 25% 25% 25% 25%;
+    margin: auto;
+
+    background-color: skyblue;
+    overflow: hidden;
+
+    justify-items: center;
+    align-items: center;
+
+    border-radius: 10px;
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
 
 #tags {
-    display: flex;
-    align-items:center;
+    position: relative;
+
+    background-color: #333333;
+    color: #000;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    width: 70%;
+
+}
+
+#location {
+    position: relative;
+
+    background-color: #333333;
+    color: #000;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    width: 70%;
+
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #333333;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding: 2px;
+    padding-left: 22px;
+
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    font-size: 15px;
+    font-weight: 600;
+
     
 }
 
-#price {
-   
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    border: none;
+    height: 100%;
+    color: white;
 }
 
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover, .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:focus {
+    background-color: #4b4b4b;
+    outline: none;
+    color: white;
+}
+
+#price {
+    margin: auto;
+    display: grid;
+    justify-items: center;
+}
+
+#amount {
+    padding: 5px;
+    font-size: 30px;
+}
 
 #slider-range {
+    margin: auto;
+    margin-bottom: 15px;
+    background-color: #333333;
+    border: none;
     position: relative;
-    height:10px;
-    width: 100px;
+    height: 10px;
+    width: 200px;
+    border-radius: 10px;
 }
 
+.ui-widget-header {
+    background-color: white;
+}
 
 
 #bttn {
     position: relative;
 
-    top: 50%; left: 50%; 
-    transform: translate(-50%,-50%);
 
-    width: 50px;
-    height: 25px;
-    background-color: #FFFFFF;
+    margin: auto;
+
+    background-color: #333333;
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    font-size: 25px;
+    font-weight: 600;
+
+    padding: 15px 30px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+#bttn:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+#bttn:active {
+    transition: transform 0.05s;
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 
-#uuid {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    margin: 10px;
-    color: white;
-    opacity: 0.3;
-    font-size: 10px;
-}
 
-#footer{
+
+#footer {
     position: fixed;
     bottom: 0;
     right: 0;
@@ -145,7 +243,7 @@ select {
 
     display: grid;
     grid-template-columns: 350px 350px 350px 350px 350px;
-    grid-template-rows: 600px ;
+    grid-template-rows: 600px;
 }
 
 .lecturer {
@@ -153,7 +251,7 @@ select {
     margin: 10px;
     width: auto;
 
-    
+
 }
 
 
@@ -161,15 +259,16 @@ select {
     position: relative;
 
     margin: 10px;
-    width:auto;
+    width: auto;
 }
 
 table {
-	font-size: 1em;
+    font-size: 1em;
 }
 
-.ui-draggable, .ui-droppable {
-	background-position: top;
+.ui-draggable,
+.ui-droppable {
+    background-position: top;
 }
 
 #main-info-container {
@@ -177,9 +276,10 @@ table {
     background-color: skyblue;
     width: 100%;
     height: fit-content;
-    
+
     border-radius: 10px;
     box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
 #teacher-image {

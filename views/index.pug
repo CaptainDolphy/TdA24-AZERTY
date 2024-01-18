@@ -1,8 +1,6 @@
 extends layout
 
 block content
-  h1(id=Title)= "Katalog Lektoru"
-
   link(rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css")
   script(src="https://code.jquery.com/jquery-3.6.0.js")
   script(src="https://code.jquery.com/ui/1.13.2/jquery-ui.js")
@@ -13,16 +11,15 @@ block content
   script(src="scripts/homepage.js")
   
   
-  #display 
   #header
-  #filters
+  #filters-container 
     #location 
       select#locSelect(multiple, hidden)
     #tags
       select#tagSelect(multiple, hidden)
             
     #price
-      #amount(style="border:0; color:#f6931f; font-weight:bold;")
+      h1#amount
       #slider-range
     #filter-bttn
       #bttn="Filter"
