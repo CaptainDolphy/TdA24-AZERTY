@@ -14,9 +14,14 @@ router.post('/', async function (req, res) {
   if ("first_name" in lecturer && "last_name" in lecturer && lecturer.first_name != "" && lecturer.first_name != null && lecturer.last_name != "" && lecturer.last_name != null) {
     lecturer.uuid = uuid();
 
-    lecturer.tags.forEach(tag => {
-      tag.uuid = uuid();
-    });
+    if(Array.isArray(lecturer.tags) && lecturer.tags.length > 0) {
+      lecturer.tags.forEach(tag => {
+        tag.uuid = uuid();
+      });
+    }
+    else {
+      delete lecturer.tags;
+    }
 
     sqlInsert = `INSERT INTO lecturers(
     [uuid],
