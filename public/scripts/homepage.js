@@ -12,7 +12,7 @@ $(document).ready(function () {
             data[i].claim = (data[i].claim == null)                     ? ""            : data[i].claim  
             data[i].price_per_hour = (data[i].price_per_hour == null)   ? "Unspecified" : data[i].price_per_hour
                  
-            data[i].tags = (data[i].tags == null) ? "" : data[i].tags
+            data[i].tags = (data[i].tags == null)                       ? ""            : data[i].tags
             
             
             
@@ -25,11 +25,11 @@ $(document).ready(function () {
                 </div>
                 `)
             $(`#lecturer-list #${data[i].uuid} #main-info-container`).append(`        
-                    <img id="teacher-image" src="${data[0].picture_url}" alt="image of the lecturer">  \
+                    <img id="teacher-image" src="${data[i].picture_url}" alt="image of the lecturer">  \
                     <div></div> 
                     <div id="teacher-name"> 
                         <h2>${data[i].title_before}</h2> 
-                        <h1>${data[i].first_name} ${data[i].middle_name} ${data[0].last_name}</h1> 
+                        <h1>${data[i].first_name} ${data[i].middle_name} ${data[i].last_name}</h1> 
                         <h2>${data[i].title_after}</h2> 
                     </div> 
                     <h2 id="teacher-location">⚲ ${data[i].location}</h2> 
@@ -66,7 +66,16 @@ $(document).ready(function () {
         
         // Price Filter
         pph=[]
-        data.forEach(function (i) { pph.push(i.price_per_hour)})
+        
+        data.forEach(function (i) { 
+            if (i.price_per_hour == "Unspecified") {
+                pph.push(0)
+            } else {
+                pph.push(i.price_per_hour)
+            }
+        })
+        
+
         pphMax=Math.max.apply(Math,pph);
         pphMin=Math.min.apply(Math,pph);
     
