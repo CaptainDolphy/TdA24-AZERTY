@@ -153,6 +153,16 @@ select {
     color: white;
 }
 
+.select2-container .select2-search--inline .select2-search__field {
+    font-family: 'Lalezar';
+    font-size: 17px;
+}
+
+.select2-results__option--selectable {
+    font-family: 'Lalezar';
+    font-size: 17px;
+}
+
 #price {
     margin: auto;
     display: grid;
@@ -222,7 +232,7 @@ select {
 }
 
 #tda-logo {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
     margin: 10px;
@@ -285,6 +295,17 @@ table {
 #teacher-image {
     position: relative;
     background-color: #00384D;
+
+    background-image: url("/images/TdA-icons/SVG/TdA_ikony_studium_white.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    color: #FFFFFF;
+    font-family: 'Lalezar';
+
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 
     display: block;
     object-fit: cover;

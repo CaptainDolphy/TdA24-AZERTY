@@ -25,11 +25,11 @@ $(document).ready(function () {
                 </div>
                 `)
             $(`#lecturer-list #${data[i].uuid} #main-info-container`).append(`        
-                    <img id="teacher-image" src="${data[0].picture_url}" alt="image of the lecturer">  \
+                    <img id="teacher-image" src="${data[i].picture_url}" alt="image of the lecturer">  \
                     <div></div> 
                     <div id="teacher-name"> 
                         <h2>${data[i].title_before}</h2> 
-                        <h1>${data[i].first_name} ${data[i].middle_name} ${data[0].last_name}</h1> 
+                        <h1>${data[i].first_name} ${data[i].middle_name} ${data[i].last_name}</h1> 
                         <h2>${data[i].title_after}</h2> 
                     </div> 
                     <h2 id="teacher-location">⚲ ${data[i].location}</h2> 
