@@ -16,7 +16,7 @@ router.post('/', async function (req, res) {
 
     var LTags = [];
     var UsedNames = [];
-    if(Array.isArray(lecturer.tags) && lecturer.tags.length > 0) {
+    if(Array.isArray(lecturer.tags)) {
       lecturer.tags.forEach(tag => {
         if(tag.name) {
           if(!UsedNames.includes(tag.name)) {
