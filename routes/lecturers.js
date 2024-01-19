@@ -15,11 +15,15 @@ router.post('/', async function (req, res) {
     lecturer.uuid = uuid();
 
     var LTags = [];
+    var UsedNames = [];
     if(Array.isArray(lecturer.tags) && lecturer.tags.length > 0) {
       lecturer.tags.forEach(tag => {
         if(tag.name) {
-          tag.uuid = uuid();
-          LTags.push(tag);
+          if(!UsedNames.includes(tag.name)) {
+            tag.uuid = uuid();
+            LTags.push(tag);
+            UsedNames.push(tag.name);
+          }
         }
       });
 
