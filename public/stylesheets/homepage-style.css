@@ -57,7 +57,7 @@ h4 {
 #uuid {
     position: absolute;
     right: 0;
-    bottom: 0;
+    top: 0;
     margin: 10px;
     color: white;
     opacity: 0.3;
@@ -246,8 +246,8 @@ select {
 
     background-size: cover;
 
-    max-width: 250px;
-    max-height: 200px;
+    max-width: 125px;
+    max-height: 50px;
 
     width: auto;
     height: auto;
@@ -296,6 +296,8 @@ table {
     border-radius: 10px;
     box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
     overflow: hidden;
+
+    cursor: pointer;
 }
 
 #teacher-image {
@@ -346,17 +348,15 @@ table {
 
 #teacher-claim {
     position: relative;
-    height: min-content;
-    width: 100%;
+    height: 25px;
+    width: 90%;
 
     padding: 0px 10px;
     color: rgba(51, 51, 51, 0.4);
 
     margin-left: 0px;
     margin-top: 0px;
-    margin-bottom: 17px;
 
-    white-space: nowrap;
     overflow: hidden;
 }
 
@@ -367,9 +367,10 @@ table {
     height: 20px;
     overflow: hidden;
 
-    margin-top: 10px;
+    margin-top: 0px;
 
     padding: 5px;
+    padding-top: 0;
 
     display: flex;
     flex-flow: row wrap;
