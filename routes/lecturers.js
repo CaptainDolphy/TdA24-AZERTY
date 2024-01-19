@@ -14,10 +14,16 @@ router.post('/', async function (req, res) {
   if ("first_name" in lecturer && "last_name" in lecturer && lecturer.first_name != "" && lecturer.first_name != null && lecturer.last_name != "" && lecturer.last_name != null) {
     lecturer.uuid = uuid();
 
+    var LTags = [];
     if(Array.isArray(lecturer.tags) && lecturer.tags.length > 0) {
       lecturer.tags.forEach(tag => {
-        tag.uuid = uuid();
+        if(tag.name) {
+          tag.uuid = uuid();
+          LTags.push(tag);
+        }
       });
+
+      lecturer.tags = LTags;
     }
     else {
       delete lecturer.tags;
