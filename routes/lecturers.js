@@ -32,6 +32,14 @@ router.post('/', async function (req, res) {
     else {
       delete lecturer.tags;
     }
+
+    for(var property in lecturer) {
+      if(property != "tags" && property != "price_per_hour" && property != "contact") {
+        if(typeof lecturer[property] !== 'string') {
+          lecturer[property] = null;
+        }
+      }
+    };
     
    
 

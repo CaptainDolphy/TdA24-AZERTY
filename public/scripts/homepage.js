@@ -110,6 +110,8 @@ $(document).ready(function () {
                 var validTags = false;
                 var validLocs = false;
 
+                var validTagsNum = 0;
+
                 // Check for price
                 validPrice = (!(i.price_per_hour < $("#slider-range").slider("values", 0)) && !(i.price_per_hour > $("#slider-range").slider("values", 1))) ? true : false
                 
@@ -118,12 +120,15 @@ $(document).ready(function () {
                 $.each($('#tagSelect').select2('data'), function(j) {
                     selTags.push($('#tagSelect').select2('data')[j].text)
                 })
-                $.each(i.tags[0], function(j) {
-                    valid = (selTags.includes((i.tags[0][j]),0)) ? true : false
+                $.each(i.tags, function(j) {
+                    valid = (selTags.includes((i.tags[j].name),0)) ? true : false
                     if (valid){
-                        validTags = true;
+                        validTagsNum ++;
                     }
                 });
+                if(validTagsNum == selTags.length) {
+                    validTags = true;
+                }
                 if (selTags == "") {
                     validTags = true;
                 }
