@@ -1,6 +1,26 @@
 $(document).ready(function () {
-    $.getJSON(`http://${location.host}/api/lecturers/${uuid} `).done(function(data) {
-            $('body').append(`
+    $.getJSON(`http://${location.host}/api/lecturers/${uuid} `).done(function (data) {
+
+        data.title_before = (data.title_before == null) ? "" : data.title_before
+        data.middle_name = (data.middle_name == null) ? "" : data.middle_name
+        data.title_after = (data.title_after == null) ? "" : data.title_after
+        data.location = (data.location == null) ? "Location unspecified..." : data.location
+        data.claim = (data.claim == null) ? "" : data.claim
+        data.price_per_hour = (data.price_per_hour == null) ? "Unspecified" : data.price_per_hour
+
+        data.bio = (data.bio == null) ? "Bio unspecified..." : data.bio
+
+        data.contact = (data.contact == null) ? {} : data.contact
+
+        if(data.contact) {
+            data.contact.telephone_numbers = (data.contact.telephone_numbers == null) ? "Unspecified" : data.contact.telephone_numbers
+            data.contact.emails = (data.contact.emails == null) ? "Unspecified" : data.contact.emails
+        }
+
+        data.tags = (data.tags == null) ? "" : data.tags
+
+
+        $('body').append(`
                 <div class='lecturer' id='${data.uuid}'> 
                     <div id="content-container"> 
                         <div id="main-info-container"> </div>
@@ -11,7 +31,7 @@ $(document).ready(function () {
                 </div>
                 <br></br>
                 `)
-            $(`#${data.uuid} #main-info-container`).append(`        
+        $(`#${data.uuid} #main-info-container`).append(`        
                     <img id="teacher-image" src="${data.picture_url}" alt="Image of the lecturer">  \
                     <div></div> 
                     <a class="page-link" href="/api/lecturers/${data.uuid}">${data.uuid}</a> 
@@ -24,11 +44,11 @@ $(document).ready(function () {
                     <h3 id="teacher-claim">${data.claim}</h3> 
                 </div>
                 `)
-            $(`#${data.uuid} #secondary-info-container`).append(`
+        $(`#${data.uuid} #secondary-info-container`).append(`
                     <div id="desc-container"> </div> 
                     <div id="tags-container"> </div>
                     `)
-            $(`#${data.uuid} #desc-container`).append(`
+        $(`#${data.uuid} #desc-container`).append(`
                         <h4 id="desc-text"> 
                             <p> 
                             ${data.bio}
@@ -37,10 +57,8 @@ $(document).ready(function () {
                         <h3 id="teacher-contact">tel. ${data.contact.telephone_numbers}, e-mail: ${data.contact.emails}, cena za hodinu: ${data.price_per_hour}</h3> 
                         <img id="tda-icon-desc" src="/images/TdA-icons/SVG/TdA_ikony_nastaveni_white.svg" alt="icon"> 
                     `)
-            $.each(data.tags[0], function(j) {
-                $(`#${data.uuid} #tags-container`).append(`<div class="tag">${data.tags[0][j]}</div>`)
-            });
-             
-            $(`#${data.uuid} #tags-container`).find(`div:contains(${data.tags[0].uuid})`).remove()
-        });       
+        $.each(data.tags, function (j) {
+            $(`#${data.uuid} #tags-container`).append(`<div class="tag">${data.tags[j].name}</div>`)
+        });
     });
+});

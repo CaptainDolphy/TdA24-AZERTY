@@ -8,9 +8,9 @@ $(document).ready(function () {
             data[i].title_before = (data[i].title_before == null)       ? ""            : data[i].title_before
             data[i].middle_name = (data[i].middle_name == null)         ? ""            : data[i].middle_name 
             data[i].title_after = (data[i].title_after == null)         ? ""            : data[i].title_after 
-            data[i].location = (data[i].location == null)               ? "Unspecified" : data[i].location
+            data[i].location = (data[i].location == null)               ? "Location unspecified" : data[i].location
             data[i].claim = (data[i].claim == null)                     ? ""            : data[i].claim  
-            data[i].price_per_hour = (data[i].price_per_hour == null)   ? "Unspecified" : data[i].price_per_hour
+            data[i].price_per_hour = (data[i].price_per_hour == null)   ? "Unspecified (0)" : data[i].price_per_hour
                  
             data[i].tags = (data[i].tags == null)                       ? ""            : data[i].tags
             
@@ -33,8 +33,8 @@ $(document).ready(function () {
                         <h2>${data[i].title_after}</h2> 
                     </div> 
                     <h2 id="teacher-location">⚲ ${data[i].location}</h2> 
+                    <h3 id="teacher-price">cena za hodinu: ${data[i].price_per_hour}</h3> 
                     <h3 id="teacher-claim">${data[i].claim}</h3> 
-                    <h3 id="teach-contact">cena za hodinu: ${data[i].price_per_hour}</h3> 
                     <div id="tags-container"> </div>
                     <br>
                     <div id="uuid">${data[i].uuid}</div> 
@@ -48,14 +48,11 @@ $(document).ready(function () {
 
             // Tag Options + Display on card
     
-            $.each(data[i].tags[0], function(j) {
-                $(`#${data[i].uuid} #tags-container`).append(`<div class="tag">${data[i].tags[0][j]}</div>`);
-                if ($(`#tagSelect #${data[i].tags[0][j]}`).length == 0) {
-                    $('#tagSelect').append(`<option id="${data[i].tags[0][j]}" value="${data[i].tags[0][j]}">${data[i].tags[0][j]}</option>`);
+            $.each(data[i].tags, function(j) {
+                $(`#${data[i].uuid} #tags-container`).append(`<div class="tag">${data[i].tags[j].name}</div>`);
+                if ($(`#tagSelect #${data[i].tags[j].name}`).length == 0) {
+                    $('#tagSelect').append(`<option id="${data[i].tags[j].name}" value="${data[i].tags[j].name}">${data[i].tags[j].name}</option>`);
                 }
-                // Remove uuid tag from view 
-                $(`#${data[i].uuid} #tags-container`).find(`div:contains(${data[i].tags[0].uuid})`).remove()
-                $(`#tagSelect`).find(`:contains(${data[i].tags[0].uuid})`).remove()
             });
 
         
@@ -102,7 +99,10 @@ $(document).ready(function () {
 
         $('#locSelect').select2({
             placeholder: 'Select Location',
-         });
+        });
+
+        //remove empty titles
+        $("h2:empty").remove();
 
         // Filter Button
 

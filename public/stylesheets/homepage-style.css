@@ -1,6 +1,7 @@
 body {
     background-color: #333333;
     margin: 0;
+    padding: 0;
     height: 100%;
     overflow: auto;
     overflow-x: hidden;
@@ -13,9 +14,9 @@ h1 {
     font-size: 20px;
 
     width: max-content;
-    margin: 7px;
 
     display: inline-block;
+    max-width: 100%;
 }
 
 h2 {
@@ -23,11 +24,14 @@ h2 {
     font-family: 'Open Sans';
     font-size: 10px;
 
-    width: max-content;
+    width: min-content;
+    margin-left: 5px;
+    margin-right: 0;
     margin-top: 5px;
     margin-bottom: 5px;
 
     display: inline-block;
+    max-width: 100%;
 }
 
 h3 {
@@ -37,6 +41,7 @@ h3 {
     font-weight: 600;
 
     width: max-content;
+    max-width: 100%;
 }
 
 h4 {
@@ -46,6 +51,7 @@ h4 {
     font-weight: 600;
 
     width: max-content;
+    max-width: 100%;
 }
 
 #uuid {
@@ -249,19 +255,16 @@ select {
 
 #lecturer-list {
     position: relative;
-    top: 100px;
+    top: 80px;
+    width: 90%;
+    margin: auto;
+    justify-content: center;
+    column-gap: 5px;
+    row-gap: 5px;
 
     display: grid;
-    grid-template-columns: 350px 350px 350px 350px 350px;
-    grid-template-rows: 600px;
-}
-
-.lecturer {
-    position: relative;
-    margin: 10px;
-    width: auto;
-
-
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 500px;
 }
 
 
@@ -281,11 +284,12 @@ table {
     background-position: top;
 }
 
+
 #main-info-container {
     position: inherit;
     background-color: skyblue;
     width: 100%;
-    height: fit-content;
+    height: 500px;
 
     border-radius: 10px;
     box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
@@ -316,11 +320,14 @@ table {
 
 #teacher-name {
     position: relative;
-    height: min-content;
+    height: 37px;
     width: 100%;
+    margin-left: 5px;
 
-    margin-left: 10px;
     width: 90%;
+
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #teacher-location {
@@ -330,6 +337,9 @@ table {
 
     margin-left: 10px;
     margin-top: 0px;
+
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #teacher-claim {
@@ -340,19 +350,28 @@ table {
     padding: 0px 10px;
     color: rgba(51, 51, 51, 0.4);
 
+    margin-left: 0px;
     margin-top: 0px;
     margin-bottom: 17px;
+
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 
 #tags-container {
     position: relative;
     width: 100%;
-    height: fit-content;
-    margin-top: 30px;
+    height: 20px;
+    overflow: hidden;
+
+    margin-top: 10px;
+
+    padding: 5px;
 
     display: flex;
     flex-flow: row wrap;
+    row-gap: 0px;
 }
 
 .tag {
@@ -361,12 +380,12 @@ table {
     height: fit-content;
     border-radius: 15px;
 
-    margin-right: 20px;
-    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
     padding: 5px 10px;
 
     background-color: skyblue;
-    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.3);
 
     color: #FFFFFF;
     font-family: 'Lalezar';
@@ -374,19 +393,16 @@ table {
     font-size: 10px;
 }
 
-
-
-
-
-
-#teacher-contact {
+#teacher-price {
     position: relative;
     margin: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
     height: min-content;
-    width: 100%;
+    width: 90%;
 
     margin-top: 0px;
     margin-bottom: 17px;
+
+    white-space: nowrap;
+    overflow: hidden;
 }
