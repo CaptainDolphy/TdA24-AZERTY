@@ -34,7 +34,6 @@ $(document).ready(function () {
         $(`#${data.uuid} #main-info-container`).append(`        
                     <img id="teacher-image" src="${data.picture_url}" alt="Image of the lecturer">  \
                     <div></div> 
-                    <a class="page-link" href="/api/lecturers/${data.uuid}">${data.uuid}</a> 
                     <div id="teacher-name"> 
                         <h2>${data.title_before}</h2> 
                         <h1>${data.first_name} ${data.middle_name} ${data.last_name}</h1> 

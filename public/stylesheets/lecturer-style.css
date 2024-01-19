@@ -98,6 +98,25 @@ h4 {
     grid-template-columns: 700px auto;
 }
 
+@media all and (max-width: 1550px) {
+    #content-container {
+        grid-template-columns: 90% !important;
+        grid-template-rows: auto auto;
+    }
+
+    #secondary-info-container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        margin-top: 30px !important;
+    }
+
+    #main-info-container {
+        max-width: 100% !important;
+    }
+}
+
+
 #main-info-container {
     position: inherit;
     background-color: skyblue;
@@ -184,6 +203,7 @@ h4 {
     background-color: skyblue;
     width: 100%;
     height: fit-content;
+    min-height: 250px;
 
     overflow: hidden;
     
@@ -247,12 +267,13 @@ h4 {
 }
 
 #teacher-contact {
-    position: relative;
+    position: absolute;
     margin: auto;
     text-align: center;
     height: min-content;
     width: 100%;
 
+    bottom: 0px;
     margin-top: 0px;
     margin-bottom: 17px;
 }
