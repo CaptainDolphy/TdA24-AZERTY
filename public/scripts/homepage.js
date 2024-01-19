@@ -1,6 +1,15 @@
 $(document).ready(function () {
     $.getJSON(`http://${location.host}/api/lecturers`).done(function(data) {
         $.each(data, function(i) {
+            data[i].title_before = (data[i].title_before == null)               ? ""                     : data[i].title_before
+            data[i].middle_name = (data[i].middle_name == null)                 ? ""                     : data[i].middle_name
+            data[i].title_after = (data[i].title_after == null)                 ? ""                     : data[i].title_after
+            data[i].location = (data[i].location == null)                       ? "Location unspecified" : data[i].location
+            data[i].claim = (data[i].claim == null)                             ? ""                     : data[i].claim
+            data[i].price_per_hour = (data[i].price_per_hour == null)           ? "Unspecified (0)"      : data[i].price_per_hour
+            data[i].tags = (data[i].tags == null)                               ? {}                     : data[i].tags
+        
+        
             $('#lecturer-list').append(`
                 <div class='lecturer' id='${data[i].uuid}' onclick="window.location='/lecturer/${data[i].uuid}';"> 
                     <div id="content-container"> 

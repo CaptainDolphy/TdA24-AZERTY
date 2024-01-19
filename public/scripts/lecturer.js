@@ -1,5 +1,18 @@
 $(document).ready(function () {
     $.getJSON(`http://${location.host}/api/lecturers/${uuid} `).done(function (data) {
+        data.title_before = (data.title_before == null)               ? ""                     : data.title_before
+        data.middle_name = (data.middle_name == null)                 ? ""                     : data.middle_name
+        data.title_after = (data.title_after == null)                 ? ""                     : data.title_after
+        data.location = (data.location == null)                       ? "Location unspecified" : data.location
+        data.claim = (data.claim == null)                             ? ""                     : data.claim
+        data.price_per_hour = (data.price_per_hour == null)           ? "Unspecified (0)"      : data.price_per_hour
+        data.bio = (data.bio == null)                                 ? "Bio unspecified..."   : data.bio
+        data.contact = (data.contact == null)                         ? {}                     : data.contact
+        data.tags = (data.tags == null)                               ? {}                     : data.tags
+        if(data.contact) {
+            data.contact.telephone_numbers = (data.contact.telephone_numbers == null) ? "Unspecified" : data.contact.telephone_numbers
+            data.contact.emails = (data.contact.emails == null)                       ? "Unspecified" : data.contact.emails
+        }
         $('body').append(`
                 <div class='lecturer' id='${data.uuid}'> 
                     <div id="content-container"> 
@@ -12,7 +25,7 @@ $(document).ready(function () {
                 <br></br>
                 `)
         $(`#${data.uuid} #main-info-container`).append(`        
-                    <img id="teacher-image" src="${data.picture_url}" alt="Image of the lecturer">  \
+                    <img id="teacher-image" src="${data.picture_url}" alt="Image of the data">  \
                     <div></div> 
                     <div id="teacher-name"> 
                         <h2>${data.title_before}</h2> 
