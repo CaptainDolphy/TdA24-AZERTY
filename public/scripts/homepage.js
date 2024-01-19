@@ -65,7 +65,7 @@ $(document).ready(function () {
         pph=[]
         
         data.forEach(function (i) { 
-            if (i.price_per_hour == "Unspecified") {
+            if (i.price_per_hour == "Unspecified (0)") {
                 i.price_per_hour = 0;
                 pph.push(0)
             } else {
