@@ -32,6 +32,22 @@ router.post('/', async function (req, res) {
     else {
       delete lecturer.tags;
     }
+    
+    lecturer.title_before = (lecturer.title_before == null)               ? ""                     : lecturer.title_before
+    lecturer.middle_name = (lecturer.middle_name == null)                 ? ""                     : lecturer.middle_name
+    lecturer.title_after = (lecturer.title_after == null)                 ? ""                     : lecturer.title_after
+    lecturer.location = (lecturer.location == null)                       ? "Location unspecified" : lecturer.location
+    lecturer.claim = (lecturer.claim == null)                             ? ""                     : lecturer.claim
+    lecturer.price_per_hour = (lecturer.price_per_hour == null)           ? "Unspecified (0)"      : lecturer.price_per_hour
+    lecturer.bio = (lecturer.bio == null)                                 ? "Bio unspecified..."   : lecturer.bio
+    lecturer.contact = (lecturer.contact == null)                         ? {}                     : lecturer.contact
+    lecturer.tags = (lecturer.tags == null)                               ? {}                     : lecturer.tags
+    if(lecturer.contact) {
+        lecturer.contact.telephone_numbers = (lecturer.contact.telephone_numbers == null) ? "Unspecified" : lecturer.contact.telephone_numbers
+        lecturer.contact.emails = (lecturer.contact.emails == null)                       ? "Unspecified" : lecturer.contact.emails
+    }
+
+
 
     sqlInsert = `INSERT INTO lecturers(
     [uuid],
