@@ -20,7 +20,6 @@ $(document).ready(function () {
                         <div id="secondary-info-container"> </div>
                     </div>
                     <div id="uuid">${data.uuid}</div> 
-                    <img id="tda-logo" src="/images/TdA-logo/TeacherDigitalAgency_LOGO_colour-white.png" alt="tda logo">
                 </div>
                 <br></br>
                 `)

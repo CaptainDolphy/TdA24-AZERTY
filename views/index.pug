@@ -5,6 +5,7 @@ block content
   script(src="https://code.jquery.com/jquery-3.6.0.js")
   script(src="https://code.jquery.com/ui/1.13.2/jquery-ui.js")
   script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js")
   link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css")
   
   link(rel="stylesheet" href="stylesheets/homepage-style.css")
@@ -12,7 +13,7 @@ block content
   
   
   #header
-    img#logo(src="./images/TdA-logo/TeacherDigitalAgency_LOGO_white.png" alt="tda white logo")
+    img#logo(src="./images/TdA-logo/TeacherDigitalAgency_LOGO_white.png" alt="tda white logo" onclick="window.location='/'")
     h1#title="Katalog Lektoru"
   #filters-container 
     #location 
@@ -27,6 +28,5 @@ block content
       #bttn="Filter"
   #lecturer-list 
   #footer 
-  img#tda-logo(src="./images/TdA-logo/TeacherDigitalAgency_LOGO_colour-white.png" alt="tda logo")
-  
+ 
 
