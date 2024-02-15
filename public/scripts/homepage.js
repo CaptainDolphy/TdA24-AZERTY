@@ -8,29 +8,29 @@ $(document).ready(function () {
             data[i].claim = (data[i].claim == null)                             ? ""                     : data[i].claim
             data[i].price_per_hour = (data[i].price_per_hour == null)           ? "Unspecified (0)"      : data[i].price_per_hour
             data[i].tags = (data[i].tags == null)                               ? {}                     : data[i].tags
-        
-        
+            data[i].picture_url = (data[i].picture_url == null)                 ? ""               : data[i].picture_url
+
             $('#lecturer-list').append(`
-                <div class='lecturer' id='${data[i].uuid}' onclick="window.location='/lecturer/${data[i].uuid}';"> 
-                    <div id="content-container"> 
+                <div class='lecturer' id='${data[i].uuid}' onclick="window.location='/lecturer/${data[i].uuid}';">
+                    <div id="content-container">
                         <div id="main-info-container"> </div>
                     </div>
                 </div>
                 `)
-            $(`#lecturer-list #${data[i].uuid} #main-info-container`).append(`        
+            $(`#lecturer-list #${data[i].uuid} #main-info-container`).append(`
                     <img id="teacher-image" src="${data[i].picture_url}" alt="image of the lecturer">  \
-                    <div></div> 
-                    <div id="teacher-name"> 
-                        <h2>${data[i].title_before}</h2> 
-                        <h1>${data[i].first_name} ${data[i].middle_name} ${data[i].last_name}</h1> 
-                        <h2>${data[i].title_after}</h2> 
-                    </div> 
-                    <h2 id="teacher-location">⚲ ${data[i].location}</h2> 
-                    <h3 id="teacher-price">cena za hodinu: ${data[i].price_per_hour}</h3> 
-                    <h3 id="teacher-claim">${data[i].claim}</h3> 
+                    <div></div>
+                    <div id="teacher-name">
+                        <h2>${data[i].title_before}</h2>
+                        <h1>${data[i].first_name} ${data[i].middle_name} ${data[i].last_name}</h1>
+                        <h2>${data[i].title_after}</h2>
+                    </div>
+                    <h2 id="teacher-location">⚲ ${data[i].location}</h2>
+                    <h3 id="teacher-price">cena za hodinu: ${data[i].price_per_hour}</h3>
+                    <h3 id="teacher-claim">${data[i].claim}</h3>
                     <div id="tags-container"> </div>
                     <br>
-                    <div id="uuid">${data[i].uuid}</div> 
+                    <div id="uuid">${data[i].uuid}</div>
                 </div>
                 `)
 
@@ -40,24 +40,24 @@ $(document).ready(function () {
             }
 
             // Tag Options + Display on card
-    
+
             $.each(data[i].tags, function(j) {
                 $(`#${data[i].uuid} #tags-container`).append(`<div class="tag">${data[i].tags[j].name}</div>`);
-                if ($(`#tagSelect #${data[i].tags[j].name}`).length == 0) {
+                if ($(`#tagSelect [id='${data[i].tags[j].name}']`).length == 0) {
                     $('#tagSelect').append(`<option id="${data[i].tags[j].name}" value="${data[i].tags[j].name}">${data[i].tags[j].name}</option>`);
                 }
             });
 
-        
-            
+
+
         });
-        
+
         $('#display').html('<p> Number of Lecturers: ' + Object.entries(data).length + '</p>');
-        
+
         // Price Filter
         pph=[]
-        
-        data.forEach(function (i) { 
+
+        data.forEach(function (i) {
             if (i.price_per_hour == "Unspecified (0)") {
                 i.price_per_hour = 0;
                 pph.push(0)
@@ -65,11 +65,11 @@ $(document).ready(function () {
                 pph.push(i.price_per_hour)
             }
         })
-        
+
 
         pphMax=Math.max.apply(Math,pph);
         pphMin=Math.min.apply(Math,pph);
-    
+
         $( "#slider-range" ).slider({
           range: true,
           min: pphMin,
@@ -83,11 +83,11 @@ $(document).ready(function () {
           " - $" + $( "#slider-range" ).slider( "values", 1 ) );
 
         // Tag Filter
-        
+
         $('#tagSelect').select2({
            placeholder: 'Select Tags',
         });
-    
+
         // Location Filter
 
         $('#locSelect').select2({
@@ -100,7 +100,7 @@ $(document).ready(function () {
         // Filter Button
 
         $("#bttn").on("click",function() {
-            
+
             $('.lecturer').hide();
             filtered=[]
 
@@ -114,7 +114,7 @@ $(document).ready(function () {
 
                 // Check for price
                 validPrice = (!(i.price_per_hour < $("#slider-range").slider("values", 0)) && !(i.price_per_hour > $("#slider-range").slider("values", 1))) ? true : false
-                
+
                 // Check for tags
                 selTags=[]
                 $.each($('#tagSelect').select2('data'), function(j) {
@@ -138,13 +138,13 @@ $(document).ready(function () {
                 $.each($('#locSelect').select2('data'), function(j) {
                     selLocs.push($('#locSelect').select2('data')[j].text)
                 })
-                
+
                 validLocs = (selLocs.includes((i.location),0)) ? true : false
-                
+
                 if (selLocs == "") {
                     validLocs = true;
                 }
-                
+
                 //Check for intersetion and filter
 
                 if (validPrice && validTags && validLocs) {
@@ -152,7 +152,7 @@ $(document).ready(function () {
                 }
 
             })
-            
+
             // Show filtered items
 
             $.each(filtered, function(i) {
@@ -161,6 +161,6 @@ $(document).ready(function () {
 
         });
 
-     
+
 });
 });
