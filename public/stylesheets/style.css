@@ -3,10 +3,13 @@ body {
     margin: 0;
     height: 100%;
     overflow: auto;
+    padding: 0;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1{
-    color: #333333;
+    color: #FFFFFF;
     font-family: 'Lalezar';
     font-size: 40px;
 

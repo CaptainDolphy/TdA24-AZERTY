@@ -15,13 +15,8 @@ $(document).ready(function () {
             data.contact.emails = (data.contact.emails == null)                       ? "Unspecified" : data.contact.emails
         }
         $('#header').append(`
-<<<<<<< HEAD
             <div id="bttn" onclick="window.location='/booking/${data.uuid}';">Rezervovat Lektora!</div>
         `)
-=======
-                <div id="bttn" onclick="window.location='/booking/${data.uuid}';">Rezervovat Lektora!</div>
-            `)
->>>>>>> abcd1724fd97bf4c4eb677d5a15f4f669709c669
 
         $('body').append(`
                 <div class='lecturer' id='${data.uuid}'>
