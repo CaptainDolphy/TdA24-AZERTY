@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  link(rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css")
+  script(src="https://code.jquery.com/jquery-3.6.0.js")
+  script(src="https://code.jquery.com/ui/1.13.2/jquery-ui.js")
+  script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js")
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css")
+
+  link(rel="stylesheet" href="stylesheets/homepage-style.css")
+  script(src="scripts/homepage.js")
+
+
+  #header
+    img#logo(src="./images/TdA-icons/SVG/TdA_ikony_studium_blue.svg" alt="tda white logo" onclick="window.location='/'")
+    h1#title="Teacher Digital Agency"
+
+  #content
+    #signform
+    #btns
+      #bttn(class="signup")="Sign Up"
+      #bttn(class="signin")="Sign In"
+    #bttn(onclick="window.location='/katalog';")="Prohlednout Katalog"
+
+  #footer
+
+
