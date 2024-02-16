@@ -12,11 +12,6 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'TeacherDigitalAgency' });
 });
 
-/* GET lecturer catalog page. */
-router.get('/katalog', async function(req, res, next) {
-    res.render('catalog', { title: 'KatalogLektoru' });
-});
-
 /* GET lecturer booking page. */
 router.get('/booking/:uuid', async function(req, res, next) {
     res.render('booking', { title: 'RezervaceLektoru' });

@@ -57,13 +57,12 @@ h4 {
 #content {
     position: relative;
     height: fit-content;
-    min-height: 300px;
-    width: 90%;
-    min-width: 1100px;
+    min-height: 100px;
+    width: 25%;
+    min-width: 200px;
 
     display: grid;
-    grid-template-columns: 100% ;
-    grid-template-rows: 25% 50% 25%;
+    grid-template-columns: 50% 50% ;
     margin: auto;
     margin-top: 60px;
 
@@ -86,6 +85,18 @@ h4 {
     column-gap:10px;
 }
 
+#lecturer-pfp {
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50px;
+    background: black;
+
+}
+
+#current-user {
+    width: 70px;
+
+}
 
 #uuid {
     position: absolute;
