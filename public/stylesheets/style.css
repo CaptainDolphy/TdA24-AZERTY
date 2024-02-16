@@ -45,3 +45,34 @@ h4 {
 
     width: max-content;
 }
+
+#bttn {
+    position: relative;
+
+
+    margin: auto;
+
+    background-color: #333333;
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    font-size: 25px;
+    font-weight: 600;
+
+    padding: 15px 30px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+#bttn:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+#bttn:active {
+    transition: transform 0.05s;
+    transform: translateY(0);
+    box-shadow: none;
+}

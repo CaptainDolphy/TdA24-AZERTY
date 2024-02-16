@@ -14,6 +14,10 @@ $(document).ready(function () {
             data.contact.telephone_numbers = (data.contact.telephone_numbers == null) ? "Unspecified" : data.contact.telephone_numbers
             data.contact.emails = (data.contact.emails == null)                       ? "Unspecified" : data.contact.emails
         }
+        $('#header').append(`
+            <div id="bttn" onclick="window.location='/booking/${data.uuid}';">Rezervovat Lektora!</div>
+        `)
+
         $('body').append(`
                 <div class='lecturer' id='${data.uuid}'>
                     <div id="content-container">
