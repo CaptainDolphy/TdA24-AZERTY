@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    $.getJSON(`http://${location.host}/api/lecturers`).done(function(data) {
-        $.each(data, function(i) {
-            data[i].title_before = (data[i].title_before == null)               ? ""                     : data[i].title_before
-            data[i].middle_name = (data[i].middle_name == null)                 ? ""                     : data[i].middle_name
-            data[i].title_after = (data[i].title_after == null)                 ? ""                     : data[i].title_after
-            data[i].location = (data[i].location == null)                       ? "Location unspecified" : data[i].location
-            data[i].claim = (data[i].claim == null)                             ? ""                     : data[i].claim
-            data[i].price_per_hour = (data[i].price_per_hour == null)           ? "Unspecified (0)"      : data[i].price_per_hour
-            data[i].tags = (data[i].tags == null)                               ? {}                     : data[i].tags
-            data[i].picture_url = (data[i].picture_url == null)                 ? ""               : data[i].picture_url
+    $.getJSON(`http://${location.host}/api/lecturers`).done(function (data) {
+        $.each(data, function (i) {
+            data[i].title_before = (data[i].title_before == null) ? "" : data[i].title_before
+            data[i].middle_name = (data[i].middle_name == null) ? "" : data[i].middle_name
+            data[i].title_after = (data[i].title_after == null) ? "" : data[i].title_after
+            data[i].location = (data[i].location == null) ? "Location unspecified" : data[i].location
+            data[i].claim = (data[i].claim == null) ? "" : data[i].claim
+            data[i].price_per_hour = (data[i].price_per_hour == null) ? "Unspecified (0)" : data[i].price_per_hour
+            data[i].tags = (data[i].tags == null) ? {} : data[i].tags
+            data[i].picture_url = (data[i].picture_url == null) ? "" : data[i].picture_url
 
             $('#lecturer-list').append(`
                 <div class='lecturer' id='${data[i].uuid}' onclick="window.location='/lecturer/${data[i].uuid}';">
@@ -20,10 +20,8 @@ $(document).ready(function () {
             $(`#lecturer-list #${data[i].uuid} #main-info-container`).append(`
                     <img id="teacher-image" src="${data[i].picture_url}" alt="image of the lecturer">  \
                     <div></div>
-                    <div id="teacher-name">
-                        <h2>${data[i].title_before}</h2>
-                        <h1>${data[i].first_name} ${data[i].middle_name} ${data[i].last_name}</h1>
-                        <h2>${data[i].title_after}</h2>
+                    <div class="teacher-name" id="teacher-name${i}">
+
                     </div>
                     <h2 id="teacher-location">⚲ ${data[i].location}</h2>
                     <h3 id="teacher-price">cena za hodinu: ${data[i].price_per_hour}</h3>
@@ -41,7 +39,7 @@ $(document).ready(function () {
 
             // Tag Options + Display on card
 
-            $.each(data[i].tags, function(j) {
+            $.each(data[i].tags, function (j) {
                 $(`#${data[i].uuid} #tags-container`).append(`<div class="tag">${data[i].tags[j].name}</div>`);
                 if ($(`#tagSelect [id='${data[i].tags[j].name}']`).length == 0) {
                     $('#tagSelect').append(`<option id="${data[i].tags[j].name}" value="${data[i].tags[j].name}">${data[i].tags[j].name}</option>`);
@@ -49,13 +47,29 @@ $(document).ready(function () {
             });
 
 
+            if (data[i].title_before) {
+                console.log(data[i].title_before)
+                $(`#teacher-name${i}`).append(`<h2>${data[i].title_before}</h2>`)
+            }
+            if (data[i].first_name) {
+                $(`#teacher-name${i}`).append(`<h1>${data[i].first_name}</h1>`)
+            }
+            if (data[i].middle_name) {
+                $(`#teacher-name${i}`).append(`<h1>${data[i].middle_name}</h1>`)
+            }
+            if (data[i].last_name) {
+                $(`#teacher-name${i}`).append(`<h1>${data[i].last_name}</h1>`)
+            }
+            if (data[i].title_after) {
+                $(`#teacher-name${i}`).append(`<h2>${data[i].title_after}</h2>`)
+            }
 
         });
 
         $('#display').html('<p> Number of Lecturers: ' + Object.entries(data).length + '</p>');
 
         // Price Filter
-        pph=[]
+        pph = []
 
         data.forEach(function (i) {
             if (i.price_per_hour == "Unspecified (0)") {
@@ -67,25 +81,25 @@ $(document).ready(function () {
         })
 
 
-        pphMax=Math.max.apply(Math,pph);
-        pphMin=Math.min.apply(Math,pph);
+        pphMax = Math.max.apply(Math, pph);
+        pphMin = Math.min.apply(Math, pph);
 
-        $( "#slider-range" ).slider({
-          range: true,
-          min: pphMin,
-          max: pphMax,
-          values: [pphMin+(pphMax-pphMin)/4, pphMax-(pphMax-pphMin)/4 ],
-          slide: function( event, ui ) {
-            $( "#amount" ).text( "$" + ui.values[0] + " - $" + ui.values[1] );
-          }
+        $("#slider-range").slider({
+            range: true,
+            min: pphMin,
+            max: pphMax,
+            values: [pphMin + (pphMax - pphMin) / 4, pphMax - (pphMax - pphMin) / 4],
+            slide: function (event, ui) {
+                $("#amount").text("$" + ui.values[0] + " - $" + ui.values[1]);
+            }
         });
-        $( "#amount" ).text( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-          " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+        $("#amount").text("$" + $("#slider-range").slider("values", 0) +
+            " - $" + $("#slider-range").slider("values", 1));
 
         // Tag Filter
 
         $('#tagSelect').select2({
-           placeholder: 'Select Tags',
+            placeholder: 'Select Tags',
         });
 
         // Location Filter
@@ -99,10 +113,10 @@ $(document).ready(function () {
 
         // Filter Button
 
-        $("#bttn").on("click",function() {
+        $("#bttn").on("click", function () {
 
             $('.lecturer').hide();
-            filtered=[]
+            filtered = []
 
             data.forEach(function (i) {
 
@@ -116,17 +130,17 @@ $(document).ready(function () {
                 validPrice = (!(i.price_per_hour < $("#slider-range").slider("values", 0)) && !(i.price_per_hour > $("#slider-range").slider("values", 1))) ? true : false
 
                 // Check for tags
-                selTags=[]
-                $.each($('#tagSelect').select2('data'), function(j) {
+                selTags = []
+                $.each($('#tagSelect').select2('data'), function (j) {
                     selTags.push($('#tagSelect').select2('data')[j].text)
                 })
-                $.each(i.tags, function(j) {
-                    valid = (selTags.includes((i.tags[j].name),0)) ? true : false
-                    if (valid){
-                        validTagsNum ++;
+                $.each(i.tags, function (j) {
+                    valid = (selTags.includes((i.tags[j].name), 0)) ? true : false
+                    if (valid) {
+                        validTagsNum++;
                     }
                 });
-                if(validTagsNum == selTags.length) {
+                if (validTagsNum == selTags.length) {
                     validTags = true;
                 }
                 if (selTags == "") {
@@ -134,12 +148,12 @@ $(document).ready(function () {
                 }
                 // Check location
 
-                selLocs=[]
-                $.each($('#locSelect').select2('data'), function(j) {
+                selLocs = []
+                $.each($('#locSelect').select2('data'), function (j) {
                     selLocs.push($('#locSelect').select2('data')[j].text)
                 })
 
-                validLocs = (selLocs.includes((i.location),0)) ? true : false
+                validLocs = (selLocs.includes((i.location), 0)) ? true : false
 
                 if (selLocs == "") {
                     validLocs = true;
@@ -155,12 +169,12 @@ $(document).ready(function () {
 
             // Show filtered items
 
-            $.each(filtered, function(i) {
+            $.each(filtered, function (i) {
                 $('.lecturer').filter(`#${filtered[i]}`).show();
             })
 
         });
 
 
-});
+    });
 });

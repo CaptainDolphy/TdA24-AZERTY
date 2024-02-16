@@ -13,7 +13,7 @@ h1{
     font-family: 'Lalezar';
     font-size: 40px;
 
-    width: max-content;
+    width: min-content;
     margin: 7px;
 
     display: inline-block;
@@ -24,9 +24,8 @@ h2 {
     font-family: 'Open Sans';
     font-size: 30px;
 
-    width: max-content;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    width: min-content;
+    margin: 7px;
 
     display: inline-block;
 }
@@ -37,7 +36,7 @@ h3 {
     font-size: 20px;
     font-weight: 600;
 
-    width: max-content;
+    width: min-content;
 }
 
 h4 {
@@ -46,7 +45,7 @@ h4 {
     font-size: 20px;
     font-weight: 600;
 
-    width: max-content;
+    width: min-content;
 }
 
 #bttn {

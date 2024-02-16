@@ -32,9 +32,7 @@ $(document).ready(function () {
                     <img id="teacher-image" src="${data.picture_url}" alt="Image of the data">  \
                     <div></div>
                     <div id="teacher-name">
-                        <h2>${data.title_before}</h2>
-                        <h1>${data.first_name} ${data.middle_name} ${data.last_name}</h1>
-                        <h2>${data.title_after}</h2>
+                        
                     </div>
                     <h2 id="teacher-location">⚲ ${data.location}</h2>
                     <h3 id="teacher-claim">${data.claim}</h3>
@@ -56,5 +54,21 @@ $(document).ready(function () {
         $.each(data.tags, function (j) {
             $(`#${data.uuid} #tags-container`).append(`<div class="tag">${data.tags[j].name}</div>`)
         });
+
+        if(data.title_before) {
+            $("#teacher-name").append(`<h2>${data.title_before}</h2>`)
+        }
+        if(data.first_name) {
+            $("#teacher-name").append(`<h1>${data.first_name}</h1>`)
+        }
+        if(data.middle_name) {
+            $("#teacher-name").append(`<h1>${data.middle_name}</h1>`)
+        }
+        if(data.last_name) {
+            $("#teacher-name").append(`<h1>${data.last_name}</h1>`)
+        }
+        if(data.title_after) {
+            $("#teacher-name").append(`<h2>${data.title_after}</h2>`)
+        }
     });
 });
