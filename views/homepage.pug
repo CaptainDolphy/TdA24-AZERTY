@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  link(rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css")
+  script(src="https://code.jquery.com/jquery-3.6.0.js")
+  script(src="https://code.jquery.com/ui/1.13.2/jquery-ui.js")
+  script(src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js")
+  link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css")
+
+  link(rel="stylesheet" href="stylesheets/homepage/homepage-text.css")
+  link(rel="stylesheet" href="stylesheets/homepage/homepage-overwrite.css")
+  link(rel="stylesheet" href="stylesheets/homepage/homepage-header.css")
+  link(rel="stylesheet" href="stylesheets/homepage/homepage-style.css")
+  script(src="scripts/homepage.js")
+
+
+  #header
+    img#logo(src="./images/TdA-logo/TeacherDigitalAgency_LOGO_white.png" alt="tda white logo" onclick="window.location='/'")
+    h1#title="Katalog Lektorů"
+
+    // userspace
+    #current-user-container
+
+        h1#current-user="Log In"
+        // (tohle nahradí text "Log In" až bude přihlášenej, jinak tam nebude žádnej image)   #current-user-pfp
+
+    // list + filters
+
+  #filters-container
+    #location
+      select#locSelect(multiple, hidden)
+    #tags
+      select#tagSelect(multiple, hidden)
+
+    #price
+      h1#amount
+      #slider-range
+    #filter-bttn
+      #bttn="Filter"
+  #lecturer-list
+  #footer
+
