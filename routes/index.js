@@ -9,8 +9,14 @@ const sqlite3 = require('sqlite3').verbose();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Katalog' });
+    res.render('index', { title: 'TeacherDigitalAgency' });
 });
+
+/* GET lecturer booking page. */
+router.get('/booking/:uuid', async function(req, res, next) {
+    res.render('booking', { title: 'RezervaceLektoru' });
+});
+
 /* GET home page of each lecturer . */
 router.get('/lecturer/:uuid', async function(req, res, next) {
   var URLuuid = req.params.uuid;
@@ -44,7 +50,7 @@ router.get('/lecturer/:uuid', async function(req, res, next) {
     }
   });
 
-  
+
 });
 
 module.exports = router;

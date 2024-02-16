@@ -51,6 +51,38 @@ h4 {
     max-width: 100%;
 }
 
+#bttn {
+    position: relative;
+
+
+    margin: auto;
+
+    background-color: #333333;
+    color: #FFFFFF;
+    font-family: 'Open Sans';
+    font-size: 25px;
+    font-weight: 600;
+
+    padding: 15px 30px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+#bttn:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1);
+}
+
+#bttn:active {
+    transition: transform 0.05s;
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+
 #header {
     top: 30px;
     position: relative;
@@ -68,7 +100,7 @@ h4 {
     background-color: skyblue;
     overflow: hidden;
 
-    
+
 
     border-radius: 10px;
     box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
@@ -93,7 +125,7 @@ h4 {
 
     margin: 10px;
     padding: 10px;
-    
+
     max-width: 120px;
     max-height: 120px;
     min-width: 50px;
@@ -150,7 +182,7 @@ h4 {
 
     top: 30px;
     left: 30px;
-    
+
     border-radius: 10px;
     box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
@@ -230,7 +262,7 @@ h4 {
     min-height: 250px;
 
     overflow: hidden;
-    
+
     border-radius: 10px;
     box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
