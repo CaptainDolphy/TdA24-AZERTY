@@ -42,25 +42,31 @@ const createToken = (uuid) => {
     });
 }
 
-const loginUser = async function (username, password) {
+const getDbData = async (sql) => {
+    return new Promise((resolve, reject) => {
+        app.db.all(sql, [], (err, users) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(users);
+        });
+    });
+}
+const loginUser = async (username, password) => {
 
     sql = `SELECT * FROM users WHERE username LIKE '${username}'`
-    await app.db.all(sql, [], async (err, users) => {
-           try {
-               if (users) {
-                   const auth = await bcrypt.compare(password, users[0].password)
-                   if (auth) {
-                       return users[0];
-                   }
-                   //throw Error('Incorrect password');
-               }
-               //throw Error('Incorrect username')
-           } catch (err) {
-               return err.message
-           }
-       });
 
-}
+    const users = await getDbData(sql)
+    if (users[0]) {
+
+        const auth = await bcrypt.compare(password, users[0].password)
+        if (auth) {
+            return users[0];
+        }
+        throw Error('Incorrect password');
+    }
+    throw Error('Incorrect username');
+    }
 
 
 module.exports.signup_get = (req, res) => {
