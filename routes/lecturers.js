@@ -11,7 +11,6 @@ router.post('/', async function (req, res) {
   var lecturer = req.body;
 
   //check if lecturer has all necessary data
-  if ("first_name" in lecturer && "last_name" in lecturer && lecturer.first_name != "" && lecturer.first_name != null && lecturer.last_name != "" && lecturer.last_name != null) {
     lecturer.uuid = uuid();
 
     var LTags = [];
@@ -40,8 +39,8 @@ router.post('/', async function (req, res) {
         }
       }
     };
-    
-   
+
+
 
 
 
@@ -84,11 +83,6 @@ router.post('/', async function (req, res) {
 
     res.json(lecturer);
     res.status(200);
-  }
-  else {
-    res.status(400);
-    res.json(lecturer);
-  }
 });
 
 router.get('/', async function (req, res) {
@@ -256,7 +250,7 @@ router.put('/:uuid', async function (req, res) {
       console.log(err);
     }
     else {
- 
+
     }
   })*/
 });

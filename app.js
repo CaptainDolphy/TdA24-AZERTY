@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const { open } = require('sqlite')
 
 // setting the sqlite to verbose debugging mode (https://github.com/TryGhost/node-sqlite3/wiki/Debugging)
 const sqlite3 = require('sqlite3').verbose();
@@ -12,13 +13,24 @@ if(!fs.existsSync(path.join(__dirname, 'data'))){
   // create data directory if it does not exist
   fs.mkdirSync(path.join(__dirname, 'data'));
 }
+
+(async () => {
+    // open the database
+    const db = await open({
+      filename: path.join(__dirname, 'data','db.sqlite'),
+      driver: sqlite3.Database
+    });
+
+    await db.run(sqlLecturerTable);
+    await db.run(sqlUserTable);
+})()
 const db = new sqlite3.Database(path.join(__dirname, 'data','db.sqlite'));
 
 var lecturersRouter = require(path.join(__dirname, 'routes', 'lecturers'));
 var indexRouter = require(path.join(__dirname, 'routes', 'index'));
+var authRouter = require(path.join(__dirname, 'routes', 'auth'));
 
 var app = express();
-
 
 
 // view engine setup
@@ -33,6 +45,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //api
 app.use('/api/lecturers', lecturersRouter);
+
+//auth
+
+app.use('/api/auth', authRouter);
 
 //frontend
 app.use('/', indexRouter);
@@ -53,23 +69,28 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var sqlTable = `CREATE TABLE IF NOT EXISTS lecturers(
-  [uuid] TEXT,
-  [title_before] TEXT,
-  [first_name] TEXT,
-  [middle_name] TEXT,
-  [last_name] TEXT,
-  [title_after] TEXT,
-  [picture_url] TEXT,
-  [location] TEXT,
-  [claim] TEXT,
-  [bio] TEXT,
-  [tags] BLOB,
-  [price_per_hour] INT,
-  [contact] BLOB
+var sqlLecturerTable = `CREATE TABLE IF NOT EXISTS lecturers(
+    [uuid] TEXT,
+    [title_before] TEXT,
+    [first_name] TEXT NOT NULL CHECK(first_name <> ''),
+    [middle_name] TEXT,
+    [last_name] TEXT NOT NULL CHECK(last_name <> ''),
+    [title_after] TEXT,
+    [picture_url] TEXT,
+    [location] TEXT,
+    [claim] TEXT,
+    [bio] TEXT,
+    [tags] BLOB,
+    [price_per_hour] INT,
+    [contact] BLOB
 )`
 
-db.run(sqlTable);
+var sqlUserTable = `CREATE TABLE IF NOT EXISTS users(
+    [uuid] TEXT NOT NULL CHECK(uuid <> ''),
+    [username] TEXT NOT NULL UNIQUE CHECK(username <> ''),
+    [password] TEXT NOT NULL CHECK(password <> '') CHECK(length(password) > 6)
+)`
+
 
 module.exports = app;
 exports.db = db;

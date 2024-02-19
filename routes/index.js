@@ -12,6 +12,14 @@ router.get('/', function(req, res, next) {
   res.render('homepage', { title: 'Katalog' });
 });
 
+/* GET signup page.  */
+router.get('/signup', function(req, res, next) {
+    res.render('signup', { title: 'Sign up' });
+});
+/* GET login page.  */
+router.get('/login', function(req, res, next) {
+    res.render('login', { title: 'Login' });
+});
 
 /* GET home page of each lecturer . */
 router.get('/lecturer/:uuid', async function(req, res, next) {
@@ -46,7 +54,7 @@ router.get('/lecturer/:uuid', async function(req, res, next) {
     }
   });
 
-  
+
 });
 
 module.exports = router;
