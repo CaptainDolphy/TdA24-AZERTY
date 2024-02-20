@@ -37,7 +37,7 @@ const handleErrors = (err) => {
 
 const maxAge = 15 * 60; // 15minutes
 const createToken = (uuid) => {
-    return jwt.sign({ uuid }, 'lofsrfl', {
+    return jwt.sign({ uuid }, 'f6264014d8c8b3d7923de0087777bc38', {
         expiresIn: maxAge
     });
 }
@@ -52,6 +52,7 @@ const getDbData = async (sql) => {
         });
     });
 }
+
 const loginUser = async (username, password) => {
 
     sql = `SELECT * FROM users WHERE username LIKE '${username}'`
@@ -74,7 +75,7 @@ module.exports.signup_get = (req, res) => {
 }
 
 module.exports.login_get = (req, res) => {
-    res.render('signup')
+    res.render('login')
 }
 
 module.exports.signup_post= async (req, res) => {
@@ -123,7 +124,11 @@ module.exports.login_post= async (req, res) => {
         const user = await loginUser(username, password);
         const token = createToken(user.uuid);
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
-        res.status(200).json({uuid:user.uuid});
+        const preUrl = req.cookies["context"];
+        res.clearCookie("context", { httpOnly: true })
+
+        console.log(preUrl)
+        res.status(201).json({ redirect: preUrl });
     } catch (err) {
         const errors = handleErrors(err)
         res.status(400).json({ errors });

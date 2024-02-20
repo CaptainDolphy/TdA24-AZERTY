@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var app = require("../app");
+const { requireAuth } = require("../middleware/authMiddleware.js")
 
 var { v4: uuid } = require('uuid');
 
@@ -17,9 +18,13 @@ router.get('/signup', function(req, res, next) {
     res.render('signup', { title: 'Sign up' });
 });
 /* GET login page.  */
-router.get('/login', function(req, res, next) {
+router.get('/login', requireAuth('/login'), (req, res) => {
     res.render('login', { title: 'Login' });
 });
+
+router.get('/booking/:uuid', requireAuth('/login'), (req, res) => {
+    res.render('booking', { title: 'Booking'})
+})
 
 /* GET home page of each lecturer . */
 router.get('/lecturer/:uuid', async function(req, res, next) {

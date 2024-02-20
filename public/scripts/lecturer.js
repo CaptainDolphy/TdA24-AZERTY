@@ -15,7 +15,7 @@ $(document).ready(function () {
             data.contact.emails = (data.contact.emails == null)                       ? "Unspecified" : data.contact.emails
         }
         $('#header').append(`
-            <div id="bttn" onclick="window.location='/booking/${data.uuid}';">Rezervovat Lektora!</div>
+            <div id="bttn" onclick="window.location.assign('/booking/${data.uuid}');">Rezervovat Lektora!</div>
         `)
 
         $('body').append(`
@@ -32,7 +32,7 @@ $(document).ready(function () {
                     <img id="teacher-image" src="${data.picture_url}" alt="Image of the data">  \
                     <div></div>
                     <div id="teacher-name">
-                        
+
                     </div>
                     <h2 id="teacher-location">⚲ ${data.location}</h2>
                     <h3 id="teacher-claim">${data.claim}</h3>

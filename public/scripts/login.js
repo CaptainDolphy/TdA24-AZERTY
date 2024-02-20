@@ -9,7 +9,8 @@ $(document).ready(function () {
         });
 
         $("#bttn").on("click",  function () {
-
+            $("#username-error").text("")
+            $("#password-error").text("")
 
 
             $.post(`http://${location.host}/api/auth/login`,
@@ -19,13 +20,10 @@ $(document).ready(function () {
                 },
                 function(data) {
                     console.log(data)
-                    if (data.uuid) {
-
-                        location.assign('/');
-                    }
+                    location.assign(data.redirect || '/')
                 })
                 .fail(function(data) {
-                    console.log(data.responseJSON)
+                  console.log(data.responseJSON)
 
                     $("#username-error").text(data.responseJSON.errors.username)
                     $("#password-error").text(data.responseJSON.errors.password)
