@@ -19,5 +19,6 @@ router.get('/', lecturerController.lecturer_get);
 router.get('/:uuid', lecturerController.lecturerUuid_get);
 router.delete('/:uuid', lecturerController.lecturerUuid_delete);
 router.put('/:uuid', lecturerController.lecturerUuid_put);
+router.post('/:uuid', lecturerController.lecturerUuid_post);
 
 module.exports = router;

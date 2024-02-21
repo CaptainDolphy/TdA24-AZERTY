@@ -258,13 +258,22 @@ module.exports.lecturerUuid_put = async (req, res) => {
             res.status(204);
         }
     });
-
-    /*app.db.run(sql, [], (err) => {
-        if(err) {
-            console.log(err);
-        }
-        else {
-
-        }
-    })*/
 }
+
+module.exports.lecturerUuid_put = async (req, res) => {
+    var URLuuid = req.params.uuid;
+}
+
+/*
+{
+    first_name: "",
+    last_name: "",
+    e_mail: "",
+    number: "",
+    relevant_tags: [],
+    message: "",
+    lessons: []
+}
+
+
+*/
