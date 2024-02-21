@@ -276,4 +276,12 @@ module.exports.lecturerUuid_put = async (req, res) => {
 }
 
 
+BEGIN:VEVENT
+SUMMARY:Event Summary       -tohle je jakoze title ("Schůzka s ${first_name} ${last_name}")
+DTSTART:YYYYMMDDHH  -start
+DTEND:YYYYMMDDHH      -konec
+DESCRIPTION:Event Description   -desc - do tohodle nacpem vsechno (message, relevant_tags, e_mail, number)
+LOCATION:Event Location     -misto idk
+END:VEVENT
+
 */
