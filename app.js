@@ -22,7 +22,6 @@ if(!fs.existsSync(path.join(__dirname, 'data'))){
     });
 
     await db.run(sqlLecturerTable);
-    await db.run(sqlUserTable);
 })()
 const db = new sqlite3.Database(path.join(__dirname, 'data','db.sqlite'));
 
@@ -82,14 +81,16 @@ var sqlLecturerTable = `CREATE TABLE IF NOT EXISTS lecturers(
     [bio] TEXT,
     [tags] BLOB,
     [price_per_hour] INT,
-    [contact] BLOB
-)`
-
-var sqlUserTable = `CREATE TABLE IF NOT EXISTS users(
-    [uuid] TEXT NOT NULL CHECK(uuid <> ''),
+    [contact] BLOB,
     [username] TEXT NOT NULL UNIQUE CHECK(username <> ''),
     [password] TEXT NOT NULL CHECK(password <> '') CHECK(length(password) > 6)
 )`
+
+//var sqlUserTable = `CREATE TABLE IF NOT EXISTS users(
+  //  [uuid] TEXT NOT NULL CHECK(uuid <> ''),
+  //  [username] TEXT NOT NULL UNIQUE CHECK(username <> ''),
+  //  [password] TEXT NOT NULL CHECK(password <> '') CHECK(length(password) > 6)
+//)`
 
 
 module.exports = app;

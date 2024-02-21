@@ -10,19 +10,24 @@ const requireAuth = function(redirPath) {
                 if (err) {
                     console.log(err.message);
                     res.cookie("context", `${req.url}`, { httpOnly: true, maxAge: 10000 })
-                    res.redirect(redirPath);
+                    res.redirect("/login");
 
                 } else {
                     console.log(decodedToken);
+                    //res.redirect(redirPath || req.url )
                     next();
                 }
             })
 
         } else {
 
-            console.log(redirPath)
-            res.cookie("context", `${req.url}`, { httpOnly: true, maxAge: 20000 })
-            res.redirect(redirPath);
+            if (req.url=="/login") {
+                next();
+            } else {
+                console.log(redirPath)
+                res.cookie("context", `${req.url}`, { httpOnly: true, maxAge: 20000 })
+                res.redirect("/login");
+            }
 
 
         }
