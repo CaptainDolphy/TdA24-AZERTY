@@ -36,11 +36,11 @@ const handleErrors = (err) => {
     return errors;
 }
 
-const maxAge = 15 * 60; // 15minutes
+const tokenMaxAge = 15 * 60; // 15minutes
 const createToken = (uuid) => {
     return jwt.sign({ uuid }, 'f6264014d8c8b3d7923de0087777bc38', {
-        expiresIn: maxAge
+        expiresIn: tokenMaxAge
     });
 }
 
-module.exports = { handleErrors, createToken }
+module.exports = { handleErrors, createToken, tokenMaxAge }

@@ -3,6 +3,31 @@ extends layout
 block content
 
 
-  link(rel="stylesheet" href="/stylesheets/lecturer-style.css")
-  h1="Zarezervovat Lektora:"
+    script.
+        uuid="#{uuid}"
+    script(src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js')
+    script(src="https://code.jquery.com/jquery-3.6.0.js")
+    script(src="https://code.jquery.com/ui/1.13.2/jquery-ui.js")
+    link(rel="stylesheet" href="/stylesheets/lecturer-style.css")
+    script(src="../scripts/booking.js")
+    link(rel="stylesheet" href="../stylesheets/booking/booking-style.css")
+
+    h1="Zarezervovat Lektora:"
+
+    form#uploadForm(enctype="multipart/form-data")
+        input#file(type="file", accept=".ical, .ics")
+        #bttn="Submit"
+
+    #form
+        form#form-container
+            input#fname(type="text" placeholder="Enter First Name")
+            input#lname(type="text" placeholder="Enter Last Name")
+            input#email(type="text" placeholder="Enter Email")
+            input#number(type="text" placeholder="Enter Phone Number")
+            input#reltags(type="text" placeholder="Enter relative tags")
+            input#message(type="text" placeholder="Enter Personal Message")
+            #bttn(class="submit")="Submit"
+            #bttn(class="close-form")="Close"
+
+    #calendar
 

@@ -44,8 +44,8 @@ module.exports.login_post= async (req, res) => {
 
     try {
         const user = await loginUser(username, password);
-        const token = createToken(user.uuid);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
+        const token = handlers.createToken(user.uuid);
+        res.cookie('jwt', token, { httpOnly: true, maxAge: handlers.tokenMaxAge * 1000})
         const preUrl = req.cookies["context"];
         res.clearCookie("context", { httpOnly: true })
 

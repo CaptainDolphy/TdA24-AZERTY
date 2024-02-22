@@ -260,8 +260,74 @@ module.exports.lecturerUuid_put = async (req, res) => {
     });
 }
 
-module.exports.lecturerUuid_put = async (req, res) => {
+module.exports.lecturerUuid_post = async (req, res) => {
     var URLuuid = req.params.uuid;
+    var reservation = req.body;
+
+    if (reservation.first_name && reservation.last_name && reservation.phone_number || reservation.e_mail) {
+        var URLuuid = req.params.uuid;
+        var overlap = false;
+
+        sql = `SELECT * FROM lecturers WHERE uuid=?`;
+
+        app.db.all(sql, [URLuuid], (err, lecturer) => {
+            if (err || lecturer == "") {
+                if (err) console.error(err);
+                res.status(404);
+                res.json({
+                    "code": 404,
+                    "message": "User not found"
+                });
+            }
+            else {
+                lecturer = lecturer[0];
+                lecturer.schedule = JSON.parse(lecturer.schedule);
+
+                reservation.lessons.forEach(lesson => {
+                    if (!lecturer.schedule[lesson]) {
+                        if (lesson < 12 && lesson >= 0) {
+                            console.log(lesson)
+
+                            lecturer.schedule[lesson] = reservation;
+                            delete lecturer.schedule[lesson].lessons
+                        }
+                    }
+                    else {
+                        overlap = true;
+                    }
+                });
+                if (overlap) {
+                    res.status(404);
+                    res.json({
+                        "code": 404,
+                        "message": "Overlapping time of appointment"
+                    });
+                }
+                else {
+                    app.db.run(`UPDATE lecturers SET schedule=? WHERE uuid=?`, [JSON.stringify(lecturer.schedule), URLuuid], (err) => {
+                        if (err) {
+                            console.log(err)
+                            res.status(404);
+                            res.json({
+                                "code": 404,
+                                "message": err
+                            });
+                        }
+                    })
+
+                    res.json(lecturer);
+                    res.status(200);
+                }
+            }
+        });
+    }
+    else {
+        res.status(404);
+        res.json({
+            "code": 404,
+            "message": "Missing information"
+        });
+    }
 }
 
 /*
