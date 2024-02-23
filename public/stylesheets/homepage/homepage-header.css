@@ -139,26 +139,17 @@
     height: auto;
 }
 
-#current-user-pfp {
-    width: 50px;
-    aspect-ratio: 1/1;
-    border-radius: 50px;
-    background: black;
-
-}
-
-#current-user {
+#log-in {
     margin: auto;
 }
 
-#current-user-container {
+#log-in-bttn {
     position: relative;
     margin: auto;
     margin-right: 20px;
     margin-top: 20px;
 
     background-color: #333333;
-    box-shadow: 4px 4px 16px 0 rgba(0, 0, 0, 0.3);
     color: #FFFFFF;
     font-family: 'Open Sans';
 
@@ -173,11 +164,12 @@
     transition: transform 0.2s ease-in-out;
 }
 
-#current-user-container:hover {
+#log-in-bttn:hover {
     transform: translateY(-5px);
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.1);
 }
 
-#current-user-container:active {
+#log-in-bttn:active {
     transition: transform 0.05s;
     transform: translateY(0);
 }

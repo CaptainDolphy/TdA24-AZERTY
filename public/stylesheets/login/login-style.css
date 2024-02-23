@@ -19,6 +19,8 @@
     display: grid;
     grid-template-columns: 10% 80% 10%;
     grid-template-rows: 25% 20% 20% 35%;
+
+    box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
 
 #logo {
