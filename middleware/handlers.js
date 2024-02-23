@@ -5,31 +5,43 @@ var { v4: uuid } = require('uuid');
 
 
 
-const handleErrors = (err) => {
+const handleErrorsApi = (err) => {
     console.log(err)
-    let errors =  { username: '', password: '' };
+    let errors = "";
+
+    if (err.message.includes("UNIQUE constraint failed: lecturers.lecturer_username")) {
+        errors = 'This username already exists. Please use another one';
+    }
+    else if (err.message.includes("lecturer_username <> ''")) {
+        errors = 'The username is missing.';
+    }
+    else if (err.message.includes("length(lecturer_password) > 6")) {
+        errors = 'Minimum password length it 6 characters';
+    }
+    else if (err.message.includes("lecturer_password <> ''")) {
+        errors = 'The password is missing.';
+    }
 
 
-    // Incorrect username
-    if (err.message === 'Incorrect username') {
-        errors.username = 'That username is not registered'
-    }
-    // Incorrect username
-    if (err.message === 'Incorrect password') {
-        errors.password= 'That password is incorrect'
-    }
+    return errors;
+}
 
-    if (err.message.includes("UNIQUE constraint failed: users.username")) {
-        errors['username'] = 'This username already exists. Please use another one';
+const handleErrorsFrontEnd = (err) => {
+    console.log(err)
+    let errors = {
+        lecturer_username: "",
+        lecturer_password: ""
+    };
+
+    // Incorrect username or password
+    if (err.message === 'Incorrect username' || err.message === 'Incorrect password') {
+        errors.lecturer_password = 'Incorrect username or password';
     }
-    if (err.message.includes("username <> ''")) {
-        errors['username'] = 'The username is missing.';
+    else if (err.message === 'Enter username') {
+        errors.lecturer_username = 'Please enter a username';
     }
-    if (err.message.includes("length(password) > 6")) {
-        errors['password'] = 'Minimum password length it 6 characters';
-    }
-    if (err.message.includes("password <> ''")) {
-        errors['password'] = 'The password is missing.';
+    else if (err.message === 'Enter password') {
+        errors.lecturer_password = 'Please enter a password';
     }
 
 
@@ -43,4 +55,4 @@ const createToken = (uuid) => {
     });
 }
 
-module.exports = { handleErrors, createToken, tokenMaxAge }
+module.exports = { handleErrorsApi, handleErrorsFrontEnd, createToken, tokenMaxAge }

@@ -82,8 +82,8 @@ var sqlLecturerTable = `CREATE TABLE IF NOT EXISTS lecturers(
     [tags] BLOB,
     [price_per_hour] INT,
     [contact] BLOB,
-    [username] TEXT NOT NULL UNIQUE CHECK(username <> ''),
-    [password] TEXT NOT NULL CHECK(password <> '') CHECK(length(password) > 6)
+    [lecturer_username] TEXT NOT NULL UNIQUE CHECK(lecturer_username <> ''),
+    [lecturer_password] TEXT NOT NULL CHECK(lecturer_password <> '') CHECK(length(lecturer_password) > 6)
 )`
 
 //var sqlUserTable = `CREATE TABLE IF NOT EXISTS users(

@@ -16,21 +16,26 @@ const getDbData = async (sql) => {
     });
 }
 
-const loginUser = async (username, password) => {
+const loginUser = async (lecturer_username, lecturer_password) => {
 
-    sql = `SELECT * FROM lecturers WHERE username LIKE '${username}'`
+    sql = `SELECT * FROM lecturers WHERE lecturer_username LIKE '${lecturer_username}'`
 
     const users = await getDbData(sql)
-    if (users[0]) {
+    const user = users[0]
 
-        const auth = await bcrypt.compare(password, users[0].password)
+    if (!lecturer_username) throw Error('Enter username');
+    if (!lecturer_password) throw Error('Enter password');
+
+    if (user) {
+
+        const auth = await bcrypt.compare(lecturer_password, user.lecturer_password)
         if (auth) {
-            return users[0];
+            return user;
         }
         throw Error('Incorrect password');
     }
     throw Error('Incorrect username');
-    }
+}
 
 
 module.exports.login_get = (req, res) => {
@@ -38,22 +43,22 @@ module.exports.login_get = (req, res) => {
 }
 
 
-module.exports.login_post= async (req, res) => {
+module.exports.login_post = async (req, res) => {
 
-    const { username, password } = req.body;
+    const { lecturer_username, lecturer_password } = req.body;
 
     try {
-        const user = await loginUser(username, password);
+        const user = await loginUser(lecturer_username, lecturer_password);
         const token = handlers.createToken(user.uuid);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: handlers.tokenMaxAge * 1000})
+        res.cookie('jwt', token, { httpOnly: true, maxAge: handlers.tokenMaxAge * 1000 })
         const preUrl = req.cookies["context"];
         res.clearCookie("context", { httpOnly: true })
 
         console.log(preUrl)
         res.status(201).json({ redirect: preUrl });
     } catch (err) {
-        const errors = handlers.handleErrors(err)
-        res.status(400).json({ errors });
+        const errors = handlers.handleErrorsFrontEnd(err)
+        res.status(400).json({errors});
     }
 
 

@@ -15,8 +15,8 @@ $(document).ready(function () {
 
             $.post(`http://${location.host}/api/auth/login`,
                 {
-                    username: `${$("#username").val()}`,
-                    password: `${$("#password").val()}`,
+                    lecturer_username: `${$("#username").val()}`,
+                    lecturer_password: `${$("#password").val()}`,
                 },
                 function(data) {
                     console.log(data)
@@ -25,8 +25,8 @@ $(document).ready(function () {
                 .fail(function(data) {
                   console.log(data.responseJSON)
 
-                    $("#username-error").text(data.responseJSON.errors.username)
-                    $("#password-error").text(data.responseJSON.errors.password)
+                    $("#username-error").text(data.responseJSON.errors.lecturer_username || "")
+                    $("#password-error").text(data.responseJSON.errors.lecturer_password || "")
 
 
                 });

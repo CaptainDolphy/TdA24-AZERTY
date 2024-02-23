@@ -13,10 +13,10 @@ module.exports.lecturer_post = async (req, res) => {
 
     var LTags = [];
     var UsedNames = [];
-    if(Array.isArray(lecturer.tags)) {
+    if (Array.isArray(lecturer.tags)) {
         lecturer.tags.forEach(tag => {
-            if(tag.name) {
-                if(!UsedNames.includes(tag.name)) {
+            if (tag.name) {
+                if (!UsedNames.includes(tag.name)) {
                     tag.uuid = uuid();
                     LTags.push(tag);
                     UsedNames.push(tag.name);
@@ -30,17 +30,17 @@ module.exports.lecturer_post = async (req, res) => {
         delete lecturer.tags;
     }
 
-    for(var property in lecturer) {
-        if(property != "tags" && property != "price_per_hour" && property != "contact") {
-            if(typeof lecturer[property] !== 'string') {
+    for (var property in lecturer) {
+        if (property != "tags" && property != "price_per_hour" && property != "contact") {
+            if (typeof lecturer[property] !== 'string') {
                 lecturer[property] = null;
             }
         }
     };
 
-    if (lecturer.password != null && lecturer.password != '' && lecturer.password.length >= 6) {
+    if (lecturer.lecturer_password != null && lecturer.lecturer_password != '' && lecturer.lecturer_password.length >= 6) {
         const salt = await bcrypt.genSalt();
-        lecturer.password = await bcrypt.hash(lecturer.password, salt);
+        lecturer.lecturer_password = await bcrypt.hash(lecturer.lecturer_password, salt);
     }
 
 
@@ -58,8 +58,8 @@ module.exports.lecturer_post = async (req, res) => {
         [tags],
         [price_per_hour],
         [contact],
-        [username],
-        [password]
+        [lecturer_username],
+        [lecturer_password]
     ) VALUES (
         ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
     )`;
@@ -78,17 +78,18 @@ module.exports.lecturer_post = async (req, res) => {
         JSON.stringify(lecturer.tags),
         lecturer.price_per_hour,
         JSON.stringify(lecturer.contact),
-        lecturer.username,
-        lecturer.password
+        lecturer.lecturer_username,
+        lecturer.lecturer_password
     ], (err) => {
         if (err) {
-            const errors = handlers.handleErrors(err);
-            res.status(400).json({ errors: errors })
+            const errors = handlers.handleErrorsApi(err);
+            res.status(400).json({ 
+                "code": 400,
+                "message": errors
+             })
         } else {
             console.log(`Successfully added lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
-            const token = handlers.createToken(lecturer.uuid);
-            res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000})
-            res.status(201).json({ lecturer: lecturer.uuid });
+            res.status(201).json(lecturer);
         }
     });
 }
@@ -107,7 +108,7 @@ module.exports.lecturer_get = async (req, res) => {
 
         res.json(rows);
         res.status(200);
-  });
+    });
 
 }
 
@@ -149,7 +150,7 @@ module.exports.lecturerUuid_get = async (req, res) => {
 }
 
 
-module.exports.lecturerUuid_delete= async (req, res) => {
+module.exports.lecturerUuid_delete = async (req, res) => {
     var URLuuid = req.params.uuid;
 
     sql = `SELECT * FROM lecturers WHERE uuid=?`;
@@ -183,79 +184,51 @@ module.exports.lecturerUuid_delete= async (req, res) => {
 module.exports.lecturerUuid_put = async (req, res) => {
     var URLuuid = req.params.uuid;
 
-    sql = `SELECT * FROM lecturers WHERE uuid=?`;
+    sql = `UPDATE lecturers SET
+        [title_before],
+        [first_name],
+        [middle_name],
+        [last_name],
+        [title_after],
+        [picture_url],
+        [location],
+        [claim],
+        [bio],
+        [tags],
+        [price_per_hour],
+        [contact],
+        [lecturer_username],
+        [lecturer_password]
+        ) WHERE uuid=? VALUES (
+            ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+        )`;
 
-    app.db.all(sql, [URLuuid], (err, lecturer) => {
-        if (err || lecturer == "") {
-            if (err) console.error(err);
-            res.status(404);
-            res.json({
+    await app.db.run(sql, [
+        lecturer.title_before,
+        lecturer.first_name,
+        lecturer.middle_name,
+        lecturer.last_name,
+        lecturer.title_after,
+        lecturer.picture_url,
+        lecturer.location,
+        lecturer.claim,
+        lecturer.bio,
+        JSON.stringify(lecturer.tags),
+        lecturer.price_per_hour,
+        JSON.stringify(lecturer.contact),
+        lecturer.username,
+        lecturer.lecturer_password,
+        lecturer.lecturer_uuid,
+    ], (err) => {
+        if (err) {
+            res.status(401).json({
                 "code": 404,
                 "message": "User not found"
-            });
-        }
-        else {
-            lecturer = lecturer[0];
-            for (const key in req.body) {
-                if (key != "uuid" || key in lecturer || key != "tags") {
-                    lecturer[key] = req.body[key];
-                }
-                if (key == "tags") {
-                    lecturer.tags = req.body.tags;
-                    lecturer.tags.forEach(tag => {
-                        tag.uuid = uuid();
-                    });
-                }
-            }
+              });
+        } else {
+            console.log(`Successfully updated lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
 
-            sql = `DELETE FROM lecturers WHERE uuid=?`;
-
-            app.db.run(sql, [URLuuid], (err) => {
-                if (err) console.log(err);
-            });
-
-            sqlInsert = `INSERT INTO lecturers(
-                [uuid],
-                [title_before],
-                [first_name],
-                [middle_name],
-                [last_name],
-                [title_after],
-                [picture_url],
-                [location],
-                [claim],
-                [bio],
-                [tags],
-                [price_per_hour],
-                [contact],
-                [username]
-            ) VALUES (
-                ?,?,?,?,?,?,?,?,?,?,?,?,?
-            )`;
-
-            app.db.run(sqlInsert, [
-                lecturer.uuid,
-                lecturer.title_before,
-                lecturer.first_name,
-                lecturer.middle_name,
-                lecturer.last_name,
-                lecturer.title_after,
-                lecturer.picture_url,
-                lecturer.location,
-                lecturer.claim,
-                lecturer.bio,
-                JSON.stringify(lecturer.tags),
-                lecturer.price_per_hour,
-                JSON.stringify(lecturer.contact),
-                lecturer.username,
-                lecturer.password
-            ], (err) => {
-                if (err) console.error(err);
-                else console.log(`Successfully updated lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
-            });
-
-            res.json(lecturer);
-            res.status(204);
+            res.status(200).json({ lecturer: lecturer.uuid });
         }
     });
 }
@@ -263,71 +236,6 @@ module.exports.lecturerUuid_put = async (req, res) => {
 module.exports.lecturerUuid_post = async (req, res) => {
     var URLuuid = req.params.uuid;
     var reservation = req.body;
-
-    if (reservation.first_name && reservation.last_name && reservation.phone_number || reservation.e_mail) {
-        var URLuuid = req.params.uuid;
-        var overlap = false;
-
-        sql = `SELECT * FROM lecturers WHERE uuid=?`;
-
-        app.db.all(sql, [URLuuid], (err, lecturer) => {
-            if (err || lecturer == "") {
-                if (err) console.error(err);
-                res.status(404);
-                res.json({
-                    "code": 404,
-                    "message": "User not found"
-                });
-            }
-            else {
-                lecturer = lecturer[0];
-                lecturer.schedule = JSON.parse(lecturer.schedule);
-
-                reservation.lessons.forEach(lesson => {
-                    if (!lecturer.schedule[lesson]) {
-                        if (lesson < 12 && lesson >= 0) {
-                            console.log(lesson)
-
-                            lecturer.schedule[lesson] = reservation;
-                            delete lecturer.schedule[lesson].lessons
-                        }
-                    }
-                    else {
-                        overlap = true;
-                    }
-                });
-                if (overlap) {
-                    res.status(404);
-                    res.json({
-                        "code": 404,
-                        "message": "Overlapping time of appointment"
-                    });
-                }
-                else {
-                    app.db.run(`UPDATE lecturers SET schedule=? WHERE uuid=?`, [JSON.stringify(lecturer.schedule), URLuuid], (err) => {
-                        if (err) {
-                            console.log(err)
-                            res.status(404);
-                            res.json({
-                                "code": 404,
-                                "message": err
-                            });
-                        }
-                    })
-
-                    res.json(lecturer);
-                    res.status(200);
-                }
-            }
-        });
-    }
-    else {
-        res.status(404);
-        res.json({
-            "code": 404,
-            "message": "Missing information"
-        });
-    }
 }
 
 /*
