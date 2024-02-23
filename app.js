@@ -84,7 +84,7 @@ var sqlLecturerTable = `CREATE TABLE IF NOT EXISTS lecturers(
     [contact] BLOB,
     [lecturer_username] TEXT NOT NULL UNIQUE CHECK(lecturer_username <> ''),
     [lecturer_password] TEXT NOT NULL CHECK(lecturer_password <> '') CHECK(length(lecturer_password) > 6)
-)`
+)`;
 
 //var sqlUserTable = `CREATE TABLE IF NOT EXISTS users(
   //  [uuid] TEXT NOT NULL CHECK(uuid <> ''),

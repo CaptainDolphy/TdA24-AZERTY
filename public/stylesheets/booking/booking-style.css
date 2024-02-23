@@ -1,5 +1,5 @@
 /* The popup form - hidden by default */
-.#form {
+#form {
   display: none;
   position: fixed;
   bottom: 0;

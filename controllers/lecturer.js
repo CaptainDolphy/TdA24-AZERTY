@@ -1,12 +1,29 @@
 var app = require("../app");
-const bcrypt = require("bcrypt")
-const jwt = require('jsonwebtoken')
+var path = require('path');
+const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 var { v4: uuid } = require('uuid');
-const handlers = require('../middleware/handlers.js')
+const handlers = require('../middleware/handlers.js');
+var compareApiLogin = require(path.join(__dirname, '../controllers', 'auth')).compareApiLogin;
 
 
 module.exports.lecturer_post = async (req, res) => {
     var lecturer = req.body;
+
+    try {
+        await compareApiLogin(lecturer.username, lecturer.password);
+    }
+    catch (err) {
+        if (err) {
+            var errors = handlers.handleErrorsApi(err);
+
+            res.status(400).json({
+                "code": 400,
+                "message": errors
+            });
+            return;
+        }
+    }
 
     //check if lecturer has all necessary data
     lecturer.uuid = uuid();
@@ -83,10 +100,10 @@ module.exports.lecturer_post = async (req, res) => {
     ], (err) => {
         if (err) {
             const errors = handlers.handleErrorsApi(err);
-            res.status(400).json({ 
+            res.status(400).json({
                 "code": 400,
                 "message": errors
-             })
+            });
         } else {
             console.log(`Successfully added lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
             res.status(201).json(lecturer);
@@ -216,15 +233,15 @@ module.exports.lecturerUuid_put = async (req, res) => {
         JSON.stringify(lecturer.tags),
         lecturer.price_per_hour,
         JSON.stringify(lecturer.contact),
-        lecturer.username,
+        lecturer.lecturer_username,
         lecturer.lecturer_password,
-        lecturer.lecturer_uuid,
+        lecturer.uuid,
     ], (err) => {
         if (err) {
             res.status(401).json({
                 "code": 404,
                 "message": "User not found"
-              });
+            });
         } else {
             console.log(`Successfully updated lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
 

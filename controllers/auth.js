@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 var { v4: uuid } = require('uuid');
 const handlers = require('../middleware/handlers.js')
 
+const APIUSERNAME = "TdA";
+const APIPASSWORD = "$2b$10$Rpax8G5D6sBypIn/TNUj/.BjU0uJhBbsLzOy1AspptCjm2o9qRffC";
 
 const getDbData = async (sql) => {
     return new Promise((resolve, reject) => {
@@ -28,13 +30,21 @@ const loginUser = async (lecturer_username, lecturer_password) => {
 
     if (user) {
 
-        const auth = await bcrypt.compare(lecturer_password, user.lecturer_password)
+        const auth = await bcrypt.compare(lecturer_password, user.lecturer_password);
         if (auth) {
             return user;
         }
         throw Error('Incorrect password');
     }
     throw Error('Incorrect username');
+}
+
+module.exports.compareApiLogin = async (username, password) => {
+    if(!password) throw Error('Incorrect api username or password');
+
+    const auth = await bcrypt.compare(password, APIPASSWORD);
+    if(username === APIUSERNAME && auth) return true;
+    throw Error('Incorrect api username or password');
 }
 
 

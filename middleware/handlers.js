@@ -21,6 +21,9 @@ const handleErrorsApi = (err) => {
     else if (err.message.includes("lecturer_password <> ''")) {
         errors = 'The password is missing.';
     }
+    else if (err.message === "Incorrect api username or password") {
+        errors = 'Incorrect api username or password';
+    }
 
 
     return errors;
