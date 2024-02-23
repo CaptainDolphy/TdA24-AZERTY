@@ -10,10 +10,13 @@ block content
     #login-container
 
         img#logo(src="./images/TdA-logo/TeacherDigitalAgency_LOGO_white.png" alt="tda white logo" onclick="window.location='/'")
-        input#username(placeholder="Enter Username")
-        input#password(type="password" placeholder="Enter Password")
-        input#showpass(type="checkbox")
-        label(for="showpass")="Show Password"
+        #username-container
+            input#username(placeholder="Enter Username")
+        #password-container
+            input#password(type="password" placeholder="Enter Password")
+        #showpass_container
+            input#showpass(type="checkbox")
+            label#showpass-label(for="showpass")="Show Password"
         #username-error=""
         #password-error=""
         #bttn(class="signinbtn")="Sign In"

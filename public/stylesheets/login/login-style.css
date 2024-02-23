@@ -4,7 +4,7 @@
     grid-column: 2/2;
     grid-row: 2/2;
 
-    width: 25%;
+    width: 400px;
     min-width: 300px;
     max-width: 350px;
     height: 500px;
@@ -14,55 +14,103 @@
     translate: -50% -50%;
 
     background-color: skyblue;
-    border-radius: 5px;
+    border-radius: 15px;
 
     display: grid;
-    grid-template-columns: 25% 50% 25%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 25% 20% 20% 35%;
 }
 
 #logo {
-
-    margin: 20px;
+    margin: auto;
     grid-column: 2/2;
     max-width: 150px;
     max-height: 150px;
 }
 
-#username {
+#username-container {
     position: absolute;
 
-    bottom: 15%;
+    display: flex;
 
     grid-column: 2/2;
-    grid-row: 2/2
+    grid-row: 2/2;
+    top: 10px;
 
+    background-color: #333333;
+    color: #000;
+    font-size: 14px;
+    border-radius: 5px;
+    width: 100%;
+    height: 50%;
+
+    margin: auto;
+    justify-content: center;
+    align-items: center;
 }
 
-#password {
+#password-container {
     position: absolute;
 
-    top: 5%;
+    display: flex;
+
     grid-column: 2/2;
     grid-row: 3/3;
+    top: 10px;
+
+    background-color: #333333;
+    color: #000;
+    font-size: 14px;
+    border-radius: 5px;
+    width: 100%;
+    height: 50%;
+
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+#username{
+    position: relative;
+    width: 97%;
+    height: 85%;
+}
+
+#password{
+    position: relative;
+    width: 97%;
+    height: 85%;
+}
+
+#showpass_container {
+    position: relative;
+    
+    height: fit-content;
+    width: max-content;
+
+    grid-column: 2/2;
+    grid-row: 4/4;
+    
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #showpass {
-    position: absolute;
+    position: relative;
 
     width: 20px;
-
-    bottom: 0%;
-    left: 0%;
-    grid-column: 2/2;
-    grid-row: 3/3;
+    margin-left: 5px;
+    margin-right: 5px;
 }
-label {
-    position: absolute;
-    right:0;
-    bottom: 15%;
-    grid-column: 2/2;
-    grid-row: 3/3;
+
+#showpass-label {
+    position: relative;
+
+    top: -16px;
+
+    font-family: 'Open Sans';
+    font-size: 20px;
+    color: white;
 }
 
 .signinbtn {
@@ -84,7 +132,12 @@ input {
 #username-error {
     position: absolute;
 
-    bottom: 0%;
+    width: max-content;
+    color: palevioletred;
+
+    font-size: 15px;
+
+    top: 70px;
 
     grid-column: 2/2;
     grid-row: 2/2;
@@ -94,9 +147,14 @@ input {
 #password-error{
     position: absolute;
 
-    bottom: 35%;
+    width: max-content;
+    color: palevioletred;
+
+    font-size: 15px;
+
+    top: -30px;
 
     grid-column: 2/2;
-    grid-row: 3/3;
+    grid-row: 4/4;
 
 }
