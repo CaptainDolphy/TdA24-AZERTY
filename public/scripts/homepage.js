@@ -6,7 +6,7 @@ $(document).ready(function () {
             data[i].title_after = (data[i].title_after == null) ? "" : data[i].title_after
             data[i].location = (data[i].location == null) ? "Location unspecified" : data[i].location
             data[i].claim = (data[i].claim == null) ? "" : data[i].claim
-            data[i].price_per_hour = (data[i].price_per_hour == null) ? "Unspecified (0)" : data[i].price_per_hour
+            data[i].price_per_hour = (data[i].price_per_hour == null) ? "Unspecified" : data[i].price_per_hour
             data[i].tags = (data[i].tags == null) ? {} : data[i].tags
             data[i].picture_url = (data[i].picture_url == null) ? "" : data[i].picture_url
 

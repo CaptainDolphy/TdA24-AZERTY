@@ -5,7 +5,7 @@ $(document).ready(function () {
         data.title_after = (data.title_after == null)                 ? ""                     : data.title_after
         data.location = (data.location == null)                       ? "Location unspecified" : data.location
         data.claim = (data.claim == null)                             ? ""                     : data.claim
-        data.price_per_hour = (data.price_per_hour == null)           ? "Unspecified (0)"      : data.price_per_hour
+        data.price_per_hour = (data.price_per_hour == null)           ? "Unspecified"      : data.price_per_hour
         data.bio = (data.bio == null)                                 ? "Bio unspecified..."   : data.bio
         data.contact = (data.contact == null)                         ? {}                     : data.contact
         data.tags = (data.tags == null)                               ? {}                     : data.tags
