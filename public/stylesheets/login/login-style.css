@@ -37,7 +37,7 @@
 
     grid-column: 2/2;
     grid-row: 2/2;
-    top: 10px;
+    top: 20px;
 
     background-color: #333333;
     color: #000;
@@ -139,7 +139,7 @@ input {
 
     font-size: 15px;
 
-    top: 70px;
+    top: 75px;
 
     grid-column: 2/2;
     grid-row: 2/2;
@@ -154,7 +154,7 @@ input {
 
     font-size: 15px;
 
-    top: -30px;
+    top: -35px;
 
     grid-column: 2/2;
     grid-row: 4/4;
