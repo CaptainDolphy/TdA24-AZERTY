@@ -1,41 +1,66 @@
 
 $(document).ready(function () {
 
+
     $.ajax({
         beforeSend: function (request) {
             request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
         },
         dataType: "json",
-        url: `http://${location.host}/api/lecturers`,
+        url: `http://${location.host}/api/lecturers/${uuid}`,
         success: function (data) {
+
+            var selected=null;
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
+                initialView: 'timeGridWeek',
                 headerToolbar: {
-                    center: 'addEventButton'
+                    left: 'prev,next,today',
+                    center: 'addEventButton',
+                    right: 'timeGridWeek,timeGridDay'
                 },
+                selectable: true,
+                selectOverlap: false,
+                selectConstraint: 'businessHours',
+                businessHours: {
+                    daysOfWeek: [0,1,2,3,4,5,6],
+                    startTime: '8:00',
+                    endTime: '20:00',
+                },
+                slotDuration: '01:00',
+
+                select: function(info) {
+                    selected = info;
+                },
+
                 customButtons: {
                     addEventButton: {
                         text: 'add event...',
-                        click: function () {
-
-                            document.getElementById("form").style.display = "block";
-
-                            if (!isNaN(date.valueOf())) { // valid?
-                                calendar.addEvent({
-                                    title: 'dynamic event',
-                                    start: date,
-                                    allDay: true
-                                });
-                                alert('Great. Now, update your database...');
-                            } else {
-                                alert('Invalid date.');
+                        click: function() {
+                            if (selected!= null) {
+                                document.getElementById("form").style.display = "block";
                             }
+                            $("#bttn.submit").on("click", function () {
+
+
+                                if (!isNaN(selected.start.valueOf())) { // valid?
+                                        calendar.addEvent({
+                                            title: `Schuzka s: ${$('#fname').val()} ${$('#lname').val()} `,
+                                            start: selected.start,
+                                            end: selected.end,
+                                            allDay: false
+                                        });
+                                    alert('Great. Now, update your database...');
+                                    selected=null;
+                                } else {
+                                    alert('Invalid date.');
+                                }
+                            })
                         }
                     }
                 }
 
-            });
+                });
             calendar.render();
 
             var calendarjQ = $(calendarEl);
@@ -58,6 +83,6 @@ $(document).ready(function () {
                 console.log($(":file")[0].files[0]);
             })
 
-        }
+            }
+        });
     });
-});

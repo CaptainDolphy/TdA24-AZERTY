@@ -51,3 +51,7 @@
 #form-container #bttn:hover, .submit:hover {
   opacity: 1;
 }
+
+#calendar {
+    background-color: white;
+   }

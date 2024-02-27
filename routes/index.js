@@ -16,6 +16,6 @@ router.get('/', indexController.index_get );
 
 router.get('/login',             requireAuth("/"),  indexController.login_get);
 router.get('/booking/:uuid',     requireAuth(),     indexController.bookingUuid_get)
-router.get('/lecturer/:uuid',                       indexController.lecturerUuid_get);
+router.get('/lecturer/placeholder="Enter First Name":uuid',                       indexController.lecturerUuid_get);
 
 module.exports = router;
