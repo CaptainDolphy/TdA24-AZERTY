@@ -201,58 +201,96 @@ module.exports.lecturerUuid_delete = async (req, res) => {
 module.exports.lecturerUuid_put = async (req, res) => {
     var URLuuid = req.params.uuid;
 
-    sql = `UPDATE lecturers SET
-        [title_before],
-        [first_name],
-        [middle_name],
-        [last_name],
-        [title_after],
-        [picture_url],
-        [location],
-        [claim],
-        [bio],
-        [tags],
-        [price_per_hour],
-        [contact],
-        [lecturer_username],
-        [lecturer_password]
-        ) WHERE uuid=? VALUES (
-            ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
-        )`;
+    sql = `SELECT * FROM lecturers WHERE uuid=?`;
 
-    await app.db.run(sql, [
-        lecturer.title_before,
-        lecturer.first_name,
-        lecturer.middle_name,
-        lecturer.last_name,
-        lecturer.title_after,
-        lecturer.picture_url,
-        lecturer.location,
-        lecturer.claim,
-        lecturer.bio,
-        JSON.stringify(lecturer.tags),
-        lecturer.price_per_hour,
-        JSON.stringify(lecturer.contact),
-        lecturer.lecturer_username,
-        lecturer.lecturer_password,
-        lecturer.uuid,
-    ], (err) => {
-        if (err) {
-            res.status(401).json({
+    app.db.all(sql, [URLuuid], (err, lecturer) => {
+        if (err || lecturer == "") {
+            if (err) console.error(err);
+            res.status(404);
+            res.json({
                 "code": 404,
                 "message": "User not found"
             });
-        } else {
-            console.log(`Successfully updated lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
+        }
+        else {
+            lecturer = lecturer[0];
 
-            res.status(200).json({ lecturer: lecturer.uuid });
+            for (const key in req.body) {
+                if (key != "uuid" || key in lecturer || key != "tags") {
+                    lecturer[key] = req.body[key];
+                }
+                if (key == "tags") {
+                    lecturer.tags = req.body.tags;
+                    lecturer.tags.forEach(tag => {
+                        tag.uuid = uuid();
+                    });
+                }
+            }
+
+            lecturer.tags = JSON.parse(lecturer.tags);
+            lecturer.contact = JSON.parse(lecturer.contact);
+
+            sql = `UPDATE lecturers SET
+                title_before=?,
+                first_name=?,
+                middle_name=?,
+                last_name=?,
+                title_after=?,
+                picture_url=?,
+                location=?,
+                claim=?,
+                bio=?,
+                tags=?,
+                price_per_hour=?,
+                contact=?,
+                lecturer_username=?,
+                lecturer_password=?
+                WHERE uuid=?`;
+
+            app.db.run(sql, [
+                lecturer.title_before,
+                lecturer.first_name,
+                lecturer.middle_name,
+                lecturer.last_name,
+                lecturer.title_after,
+                lecturer.picture_url,
+                lecturer.location,
+                lecturer.claim,
+                lecturer.bio,
+                JSON.stringify(lecturer.tags),
+                lecturer.price_per_hour,
+                JSON.stringify(lecturer.contact),
+                lecturer.lecturer_username,
+                lecturer.lecturer_password,
+                lecturer.uuid,
+            ], (err) => {
+                if (err) {
+                    if (err.message.includes("UNIQUE constraint failed")) {
+                        res.status(404).json({
+                            "code": 404,
+                            "message": "Update failed, Username already taken"
+                        });
+                    }
+                    else {
+                        res.status(404).json({
+                            "code": 404,
+                            "message": "Update failed"
+                        });
+                        console.log(err)
+                    }
+                }
+                else {
+                    console.log(`Successfully updated lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
+
+                    res.status(200).json({ lecturer });
+                }
+            });
         }
     });
 }
 
 module.exports.lecturerUuid_post = async (req, res) => {
     var URLuuid = req.params.uuid;
-    var reservation = req.body;
 }
 
 /*
