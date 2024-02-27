@@ -261,7 +261,6 @@ module.exports.lecturerUuid_put = async (req, res) => {
                             "code": 404,
                             "message": "Update failed"
                         });
-                        console.log(err)
                     }
                 }
                 else {
@@ -289,13 +288,19 @@ module.exports.lecturerUuid_post = async (req, res) => {
     lessons: []
 }
 
-
-BEGIN:VEVENT
-SUMMARY:Event Summary       -tohle je jakoze title ("Schůzka s ${first_name} ${last_name}")
-DTSTART:YYYYMMDDHH  -start
-DTEND:YYYYMMDDHH      -konec
-DESCRIPTION:Event Description   -desc - do tohodle nacpem vsechno (message, relevant_tags, e_mail, number)
-LOCATION:Event Location     -misto idk
-END:VEVENT
+BEGIN:VCALENDAR
+ PRODID:-//TdA//Meeting
+ VERSION:2.0
+ BEGIN:VEVENT
+ UID:uid1@example.com        -id
+ ORGANIZER: TdA        -mail lecturera
+ DTSTART:YYYYMMDDHH    -start
+ DTEND:YYYYMMDDHH      -konec
+ STATUS:CONFIRMED
+ CATEGORIES:categories        -tady budou relevant tags
+ SUMMARY:Event Summary       -tohle je jakoze title ("Schůzka s ${first_name} ${last_name}")
+ DESCRIPTION:Event Description   -desc - do tohodle nacpem vsechno (message, e_mail, number)
+ END:VEVENT
+ END:VCALENDAR
 
 */

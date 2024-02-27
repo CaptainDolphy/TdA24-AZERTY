@@ -54,7 +54,6 @@ $(document).ready(function () {
 
 
                 if (data[i].title_before) {
-                    console.log(data[i].title_before)
                     $(`#teacher-name${i}`).append(`<h2>${data[i].title_before}</h2>`)
                 }
                 if (data[i].first_name) {

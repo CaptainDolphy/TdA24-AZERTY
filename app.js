@@ -43,10 +43,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //api
+
+//api password "VGRBOmQ4RWY2IWRHR19wdg=="
 app.use('/api/lecturers', lecturersRouter);
 
 //auth
-
 app.use('/api/auth', authRouter);
 
 //frontend
@@ -65,6 +66,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  console.log(err)
   res.render('error');
 });
 
