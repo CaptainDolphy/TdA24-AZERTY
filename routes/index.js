@@ -15,7 +15,7 @@ var indexController = require(path.join(__dirname, '../controllers', 'index'));
 router.get('/', indexController.index_get );
 
 router.get('/login',             requireAuth("/"),  indexController.login_get);
-router.get('/booking/:uuid',     requireAuth(),     indexController.bookingUuid_get)
+router.get('/booking/:uuid',     indexController.bookingUuid_get)
 router.get('/lecturer/:uuid',                       indexController.lecturerUuid_get);
 
 module.exports = router;
