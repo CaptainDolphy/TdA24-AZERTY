@@ -52,12 +52,45 @@ $(document).ready(function () {
                                         });
                                     alert('Great. Now, update your database...');
                                     selected=null;
+                                    var jsonData = calendar.getEvents().map(function(event) {
+                                        return {
+                                            title: event.title,
+                                            start: event.start,
+                                            end: event.end
+                                        };
+                                    });
+
+                                    console.log(jsonData);
+                                    $.ajax({
+                                        type: 'post',
+                                        data: jsonData,
+                                        beforeSend: function (request) {
+                                            request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
+                                        },
+                                        dataType: "json",
+                                        url: `http://${location.host}/api/lecturers/${uuid}`,
+                                        success: function (data) {
+                                            console.log(data)
+                                            location.assign(data.redirect || '/')
+                                        },
+                                        error: function (data) {
+                                            console.log(data.responseJSON)
+                                        }
+
+                                    });
                                 } else {
                                     alert('Invalid date.');
                                 }
                             })
                         }
                     }
+                },
+                events:
+                {
+                    url: `http://${location.host}/api/lecturers/${uuid}`,
+                    format: 'ical',
+                    method: 'GET',
+                    extraParams:{},
                 }
 
                 });

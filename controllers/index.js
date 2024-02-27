@@ -11,7 +11,8 @@ module.exports.login_get = (req, res, next) => {
     res.render('login', { title: 'Login' });
 }
 module.exports.bookingUuid_get = (req, res, next) => {
-    res.render('booking', { title: 'Booking'})
+    var URLuuid = req.params.uuid;
+    res.render('booking', { title: 'Booking', uuid:URLuuid })
 }
 module.exports.lecturerUuid_get = async (req, res, next) => {
     var URLuuid = req.params.uuid;

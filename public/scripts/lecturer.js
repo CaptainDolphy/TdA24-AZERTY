@@ -21,7 +21,7 @@ $(document).ready(function () {
                 data.contact.emails = (data.contact.emails == null) ? "Unspecified" : data.contact.emails
             }
             $('#header').append(`
-            <div id="bttn" onclick="window.location.assign('/booking/${data.uuid}');">Rezervovat Lektora!</div>
+            <div id="bttn" onclick="window.location='/booking/${data.uuid}';">Rezervovat Lektora!</div>
         `)
 
             $('body').append(`
@@ -76,6 +76,6 @@ $(document).ready(function () {
             if (data.title_after) {
                 $("#teacher-name").append(`<h2>${data.title_after}</h2>`)
             }
-        }   
+        }
     });
 });
