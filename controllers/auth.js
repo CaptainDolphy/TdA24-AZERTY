@@ -39,14 +39,6 @@ const loginUser = async (lecturer_username, lecturer_password) => {
     throw Error('Incorrect username');
 }
 
-module.exports.compareApiLogin = async (username, password) => {
-    if(!password) throw Error('Incorrect api username or password');
-
-    const auth = await bcrypt.compare(password, APIPASSWORD);
-    if(username === APIUSERNAME && auth) return true;
-    throw Error('Incorrect api username or password');
-}
-
 
 module.exports.login_get = (req, res) => {
     res.render('login')

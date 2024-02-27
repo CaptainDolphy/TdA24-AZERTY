@@ -9,21 +9,21 @@ const { open } = require('sqlite')
 const sqlite3 = require('sqlite3').verbose();
 // creates database with fileneme db.sqlite in directory './data/'
 const fs = require("node:fs");
-if(!fs.existsSync(path.join(__dirname, 'data'))){
+if (!fs.existsSync(path.join(__dirname, 'data'))) {
   // create data directory if it does not exist
   fs.mkdirSync(path.join(__dirname, 'data'));
 }
 
 (async () => {
-    // open the database
-    const db = await open({
-      filename: path.join(__dirname, 'data','db.sqlite'),
-      driver: sqlite3.Database
-    });
+  // open the database
+  const db = await open({
+    filename: path.join(__dirname, 'data', 'db.sqlite'),
+    driver: sqlite3.Database
+  });
 
-    await db.run(sqlLecturerTable);
+  await db.run(sqlLecturerTable);
 })()
-const db = new sqlite3.Database(path.join(__dirname, 'data','db.sqlite'));
+const db = new sqlite3.Database(path.join(__dirname, 'data', 'db.sqlite'));
 
 var lecturersRouter = require(path.join(__dirname, 'routes', 'lecturers'));
 var indexRouter = require(path.join(__dirname, 'routes', 'index'));
@@ -53,12 +53,12 @@ app.use('/api/auth', authRouter);
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = process.env.ENV === 'development' ? err : {};
@@ -87,9 +87,9 @@ var sqlLecturerTable = `CREATE TABLE IF NOT EXISTS lecturers(
 )`;
 
 //var sqlUserTable = `CREATE TABLE IF NOT EXISTS users(
-  //  [uuid] TEXT NOT NULL CHECK(uuid <> ''),
-  //  [username] TEXT NOT NULL UNIQUE CHECK(username <> ''),
-  //  [password] TEXT NOT NULL CHECK(password <> '') CHECK(length(password) > 6)
+//  [uuid] TEXT NOT NULL CHECK(uuid <> ''),
+//  [username] TEXT NOT NULL UNIQUE CHECK(username <> ''),
+//  [password] TEXT NOT NULL CHECK(password <> '') CHECK(length(password) > 6)
 //)`
 
 

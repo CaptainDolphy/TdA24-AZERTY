@@ -10,21 +10,6 @@ var compareApiLogin = require(path.join(__dirname, '../controllers', 'auth')).co
 module.exports.lecturer_post = async (req, res) => {
     var lecturer = req.body;
 
-    try {
-        await compareApiLogin(lecturer.username, lecturer.password);
-    }
-    catch (err) {
-        if (err) {
-            var errors = handlers.handleErrorsApi(err);
-
-            res.status(400).json({
-                "code": 400,
-                "message": errors
-            });
-            return;
-        }
-    }
-
     //check if lecturer has all necessary data
     lecturer.uuid = uuid();
 

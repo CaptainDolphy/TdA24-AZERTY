@@ -37,7 +37,7 @@ module.exports.lecturerUuid_get = async (req, res, next) => {
         });
         if (lecturerFound) {
             res.status(200);
-            res.render('lecturer', { title: 'Lektori', uuid:URLuuid });
+            res.render('lecturer', { title: 'Lektoři', uuid:URLuuid });
         }
         else {
             res.status(404);
