@@ -11,8 +11,11 @@ block content
     link(rel="stylesheet" href="/stylesheets/lecturer-style.css")
     script(src="../scripts/booking.js")
     link(rel="stylesheet" href="../stylesheets/booking/booking-style.css")
+    link(rel="stylesheet" href="../stylesheets/booking/header-style.css")
 
-    h1="Zarezervovat Lektora:"
+    #header
+        img#logo(src="/images/TdA-logo/TeacherDigitalAgency_LOGO_white.png" alt="tda white logo" onclick="window.location='/'")
+        h1#title="Zarezervovat Lektora"
 
     form#uploadForm(enctype="multipart/form-data")
         input#file(type="file", accept=".ical, .ics")
