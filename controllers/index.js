@@ -48,3 +48,7 @@ module.exports.lecturerUuid_get = async (req, res, next) => {
 
 
 }
+module.exports.adminPanel_get = (req, res, next) => {
+    var URLuuid = req.params.uuid;
+    res.render('adminPanel', { title: 'Admin Panel', uuid:URLuuid })
+}

@@ -53,11 +53,11 @@ module.exports.login_post = async (req, res) => {
         const user = await loginUser(lecturer_username, lecturer_password);
         const token = handlers.createToken(user.uuid);
         res.cookie('jwt', token, { httpOnly: true, maxAge: handlers.tokenMaxAge * 1000 })
-        const preUrl = req.cookies["context"];
+        const targetUrl = `/lecturer/${user.uuid}/adminPanel`;
         res.clearCookie("context", { httpOnly: true })
 
-        console.log(preUrl)
-        res.status(201).json({ redirect: preUrl });
+        console.log(targetUrl)
+        res.status(201).json({ redirect: targetUrl });
     } catch (err) {
         const errors = handlers.handleErrorsFrontEnd(err)
         res.status(400).json({errors});

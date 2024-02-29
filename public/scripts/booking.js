@@ -100,7 +100,7 @@ $(document).ready(function () {
 
             $("#bttn").on("click", function () {
 
-                $.post(`http://${location.host}/api/lecturers/${data.uuid}`,
+                $.post(`http://${location.host}/api/lecturers/${data.uuid}`,//tady musi byt k tomu ten auth header na to api
                     {
                         uuid: `${data.uuid}`,
                         schedule: `${$(":file")[0].files[0]}`

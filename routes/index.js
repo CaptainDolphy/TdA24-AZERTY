@@ -12,10 +12,11 @@ const sqlite3 = require('sqlite3').verbose();
 
 var indexController = require(path.join(__dirname, '../controllers', 'index'));
 
-router.get('/', indexController.index_get );
+router.get('/', indexController.index_get);
 
-router.get('/login',             requireAuth("/"),  indexController.login_get);
-router.get('/booking/:uuid',     indexController.bookingUuid_get)
+router.get('/login',                                indexController.login_get);
+router.get('/booking/:uuid',                        indexController.bookingUuid_get)
 router.get('/lecturer/:uuid',                       indexController.lecturerUuid_get);
+router.get('/lecturer/:uuid/adminPanel', requireAuth(), indexController.adminPanel_get);
 
 module.exports = router;
