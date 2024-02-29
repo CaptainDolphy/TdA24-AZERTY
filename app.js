@@ -22,10 +22,12 @@ if (!fs.existsSync(path.join(__dirname, 'data'))) {
   });
 
   await db.run(sqlLecturerTable);
+  await db.run(sqlCalendar);
 })()
 const db = new sqlite3.Database(path.join(__dirname, 'data', 'db.sqlite'));
 
 var lecturersRouter = require(path.join(__dirname, 'routes', 'lecturers'));
+var bookingRouter = require(path.join(__dirname, 'routes', 'booking'));
 var indexRouter = require(path.join(__dirname, 'routes', 'index'));
 var authRouter = require(path.join(__dirname, 'routes', 'auth'));
 
@@ -46,6 +48,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //api password "VGRBOmQ4RWY2IWRHR19wdg=="
 app.use('/api/lecturers', lecturersRouter);
+
+app.use('/api/booking', bookingRouter);
 
 //auth
 app.use('/api/auth', authRouter);
@@ -88,11 +92,10 @@ var sqlLecturerTable = `CREATE TABLE IF NOT EXISTS lecturers(
     [lecturer_password] TEXT NOT NULL CHECK(lecturer_password <> '') CHECK(length(lecturer_password) > 6)
 )`;
 
-//var sqlUserTable = `CREATE TABLE IF NOT EXISTS users(
-//  [uuid] TEXT NOT NULL CHECK(uuid <> ''),
-//  [username] TEXT NOT NULL UNIQUE CHECK(username <> ''),
-//  [password] TEXT NOT NULL CHECK(password <> '') CHECK(length(password) > 6)
-//)`
+var sqlCalendar = `CREATE TABLE IF NOT EXISTS calendars(
+  [uuid] TEXT NOT NULL UNIQUE CHECK(uuid <> ''),
+  [data] BLOB
+)`
 
 
 module.exports = app;

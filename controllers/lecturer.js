@@ -272,14 +272,6 @@ module.exports.lecturerUuid_put = async (req, res) => {
         }
     });
 }
-
-module.exports.lecturerUuid_post = async (req, res) => {
-    var URLuuid = req.params.uuid;
-
-    
-
-}
-
 /*
 {
     first_name: "",
