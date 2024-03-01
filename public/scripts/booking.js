@@ -15,7 +15,6 @@ $(document).ready(function () {
                 initialView: 'timeGridWeek',
                 headerToolbar: {
                     left: 'prev,next,today',
-                    center: 'addEventButton',
                     right: 'timeGridWeek,timeGridDay'
                 },
                 selectable: true,
@@ -30,89 +29,81 @@ $(document).ready(function () {
                 unselectCancel: '.fc-addEventButton-button, #form, .submit',
                 select: function (info) {
                     selected = info;
+                    if (selected != null) {
+                        document.getElementById("form").style.display = "block";
+                    }
+                    $("#bttn.submit").on("click", function () {
+
+                        console.log(selected)
+                        if (!isNaN(selected.start.valueOf())) { // valid?
+                            document.getElementById("fname").style.color = "#000000"
+                            document.getElementById("lname").style.color = "#000000"
+                            document.getElementById("email").style.color = "#000000"
+                            if (!$('#fname').val()) {
+                                document.getElementById("fname").style.color = "#ff3030"
+                            }
+                            else if (!$('#lname').val()) {
+                                document.getElementById("lname").style.color = "#ff3030"
+                            }
+                            else if (!$('#email').val() && !$('#number').val()) {
+                                document.getElementById("email").style.color = "#ff3030"
+                            }
+                            else {
+                                calendar.addEvent({
+                                    title: `Schuzka s: ${$('#fname').val()} ${$('#lname').val()}`,
+                                    start: selected.start,
+                                    end: selected.end,
+                                    extendedProps: {
+                                        email: `${$('#email').val()}`,
+                                        number: `${$('#number').val()}`,
+                                        reltags: `${$('#reltags').val()}`,
+                                        message: `${$('#message').val()}`,
+                                    },
+                                    allDay: false
+                                });
+                                selected = null;
+                                var events = calendar.getEvents();
+                                var jsonData = [];
+                                events.forEach((event, index) => {
+                                    var eventToPush = {
+                                        title: event.title,
+                                        start: event.start,
+                                        end: event.end,
+                                        extendedProps: {
+                                            email: event.extendedProps.email,
+                                            number: event.extendedProps.number,
+                                            reltags: event.extendedProps.reltags,
+                                            message: event.extendedProps.message,
+                                        }
+                                    }
+                                    jsonData.push(eventToPush);
+                                });
+
+                                console.log(jsonData);
+                                $.ajax({
+                                    type: 'post',
+                                    data: { data: JSON.stringify(jsonData) },
+                                    dataType: "json",
+                                    url: `http://${location.host}/api/booking/${uuid}`,
+                                    success: function (data) {
+                                        console.log(data);
+                                        document.getElementById("form").style.display = "none";
+                                        //location.assign(data.redirect || '/')
+                                    },
+                                    error: function (data) {
+                                        console.log(data.responseJSON)
+                                    }
+
+                                });
+                            }
+                        } else {
+                            alert('Invalid date.');
+                        }
+                    });
                 },
                 unselect: function (info) {
                     selected = null;
                     document.getElementById("form").style.display = "none";
-                },
-
-                customButtons: {
-                    addEventButton: {
-                        text: 'add event...',
-                        click: function () {
-                            if (selected != null) {
-                                document.getElementById("form").style.display = "block";
-                            }
-                            $("#bttn.submit").on("click", function () {
-
-                                console.log(selected)
-                                if (!isNaN(selected.start.valueOf())) { // valid?
-                                    document.getElementById("fname").style.color = "#000000"
-                                    document.getElementById("lname").style.color = "#000000"
-                                    document.getElementById("email").style.color = "#000000"
-                                    if (!$('#fname').val()) {
-                                        document.getElementById("fname").style.color = "#ff3030"
-                                    }
-                                    else if (!$('#lname').val()) {
-                                        document.getElementById("lname").style.color = "#ff3030"
-                                    }
-                                    else if (!$('#email').val() && !$('#number').val()) {
-                                        document.getElementById("email").style.color = "#ff3030"
-                                    }
-                                    else {
-                                        calendar.addEvent({
-                                            title: `Schuzka s: ${$('#fname').val()} ${$('#lname').val()}`,
-                                            start: selected.start,
-                                            end: selected.end,
-                                            extendedProps: {
-                                                email: `${$('#email').val()}`,
-                                                number: `${$('#number').val()}`,
-                                                reltags: `${$('#reltags').val()}`,
-                                                message: `${$('#message').val()}`,
-                                            },
-                                            allDay: false
-                                        });
-                                        selected = null;
-                                        var events = calendar.getEvents();
-                                        var jsonData = [];
-                                        events.forEach((event, index) => {
-                                            var eventToPush = {
-                                                title: event.title,
-                                                start: event.start,
-                                                end: event.end,
-                                                extendedProps: {
-                                                    email: event.extendedProps.email,
-                                                    number: event.extendedProps.number,
-                                                    reltags: event.extendedProps.reltags,
-                                                    message: event.extendedProps.message,
-                                                }
-                                            }
-                                            jsonData.push(eventToPush);
-                                        });
-
-                                        console.log(jsonData);
-                                        $.ajax({
-                                            type: 'post',
-                                            data: { data: JSON.stringify(jsonData) },
-                                            dataType: "json",
-                                            url: `http://${location.host}/api/booking/${uuid}`,
-                                            success: function (data) {
-                                                console.log(data);
-                                                document.getElementById("form").style.display = "none";
-                                                //location.assign(data.redirect || '/')
-                                            },
-                                            error: function (data) {
-                                                console.log(data.responseJSON)
-                                            }
-
-                                        });
-                                    }
-                                } else {
-                                    alert('Invalid date.');
-                                }
-                            });
-                        }
-                    }
                 },
                 events:
                 {
