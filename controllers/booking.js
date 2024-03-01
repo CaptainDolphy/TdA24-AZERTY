@@ -107,7 +107,7 @@ module.exports.booking_post = async (req, res) => {
                     }
                 ics += "BEGIN:VEVENT\n"
                 ics += `UID:${URLuuid}--${serverCalendar.indexOf(serverLesson)}\n`
-                    ics += `ORGANIZER:MAil lecturera?\n`
+                    ics += `ORGANIZER:TourDeApp\n`
                     ics += `DTSTAMP:${getDate(new Date())}\n`
                     ics += `DTSTART:${getDate(new Date(serverLesson.start))}\n`
                     ics += `DTEND:${getDate(new Date(serverLesson.end))}\n`
