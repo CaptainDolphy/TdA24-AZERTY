@@ -32,7 +32,6 @@ module.exports.booking_post = async (req, res) => {
     var URLuuid = req.params.uuid;
 
     var calendar = JSON.parse(req.body.data);
-    console.log(calendar)
 
     sql = `SELECT * FROM calendars WHERE uuid=?`;
 
@@ -67,7 +66,6 @@ module.exports.booking_post = async (req, res) => {
             //remove overlapping lessons (mistake or trolling in request)
             for (const serverLesson of serverCalendar) {
                 for (index in calendar) {
-                    console.log(index)
                     if (calendar[index].start == "" || calendar[index].end == "") {
                         calendar.splice(index, 1);
                         break;

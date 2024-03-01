@@ -1,16 +1,15 @@
 
 $(document).ready(function () {
-
+    $.ajaxSetup({
+        headers: { 'Authorization': 'Basic VGRBOmQ4RWY2IWRHR19wdg==' }
+    });
 
     $.ajax({
-        beforeSend: function (request) {
-            request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
-        },
         dataType: "json",
         url: `http://${location.host}/api/booking/${uuid}`,
         success: function (data) {
 
-            var selected=null;
+            var selected = null;
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
@@ -23,30 +22,44 @@ $(document).ready(function () {
                 selectOverlap: false,
                 selectConstraint: 'businessHours',
                 businessHours: {
-                    daysOfWeek: [0,1,2,3,4,5,6],
+                    daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
                     startTime: '8:00',
                     endTime: '20:00',
                 },
                 slotDuration: '01:00',
                 unselectCancel: '.fc-addEventButton-button, #form, .submit',
-                select: function(info) {
+                select: function (info) {
                     selected = info;
                 },
-                unselect: function(info) {
+                unselect: function (info) {
                     selected = null;
+                    document.getElementById("form").style.display = "none";
                 },
 
                 customButtons: {
                     addEventButton: {
                         text: 'add event...',
-                        click: function() {
-                            if (selected!= null) {
+                        click: function () {
+                            if (selected != null) {
                                 document.getElementById("form").style.display = "block";
                             }
                             $("#bttn.submit").on("click", function () {
 
-                            console.log(selected)
+                                console.log(selected)
                                 if (!isNaN(selected.start.valueOf())) { // valid?
+                                    document.getElementById("fname").style.color = "#000000"
+                                    document.getElementById("lname").style.color = "#000000"
+                                    document.getElementById("email").style.color = "#000000"
+                                    if (!$('#fname').val()) {
+                                        document.getElementById("fname").style.color = "#ff3030"
+                                    }
+                                    else if (!$('#lname').val()) {
+                                        document.getElementById("lname").style.color = "#ff3030"
+                                    }
+                                    else if (!$('#email').val() && !$('#number').val()) {
+                                        document.getElementById("email").style.color = "#ff3030"
+                                    }
+                                    else {
                                         calendar.addEvent({
                                             title: `Schuzka s: ${$('#fname').val()} ${$('#lname').val()}`,
                                             start: selected.start,
@@ -59,46 +72,45 @@ $(document).ready(function () {
                                             },
                                             allDay: false
                                         });
-                                    selected = null;
-                                    var events = calendar.getEvents();
-                                    var jsonData = [];
-                                    events.forEach((event, index) => {
-                                        var eventToPush = {
-                                            title: event.title,
-                                            start: event.start,
-                                            end: event.end,
-                                            extendedProps: {
-                                                email: event.extendedProps.email,
-                                                number: event.extendedProps.number,
-                                                reltags: event.extendedProps.reltags,
-                                                message: event.extendedProps.message,
+                                        selected = null;
+                                        var events = calendar.getEvents();
+                                        var jsonData = [];
+                                        events.forEach((event, index) => {
+                                            var eventToPush = {
+                                                title: event.title,
+                                                start: event.start,
+                                                end: event.end,
+                                                extendedProps: {
+                                                    email: event.extendedProps.email,
+                                                    number: event.extendedProps.number,
+                                                    reltags: event.extendedProps.reltags,
+                                                    message: event.extendedProps.message,
+                                                }
                                             }
-                                        }
-                                        jsonData.push(eventToPush);
-                                    });
+                                            jsonData.push(eventToPush);
+                                        });
 
-                                    console.log(jsonData);
-                                    $.ajax({
-                                        type: 'post',
-                                        data: {data:JSON.stringify(jsonData)},
-                                        //beforeSend: function (request) {
-                                        //    request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
-                                        //},
-                                        dataType: "json",
-                                        url: `http://${location.host}/api/booking/${uuid}`,
-                                        success: function (data) {
-                                            console.log(data)
-                                            //location.assign(data.redirect || '/')
-                                        },
-                                        error: function (data) {
-                                            console.log(data.responseJSON)
-                                        }
+                                        console.log(jsonData);
+                                        $.ajax({
+                                            type: 'post',
+                                            data: { data: JSON.stringify(jsonData) },
+                                            dataType: "json",
+                                            url: `http://${location.host}/api/booking/${uuid}`,
+                                            success: function (data) {
+                                                console.log(data);
+                                                document.getElementById("form").style.display = "none";
+                                                //location.assign(data.redirect || '/')
+                                            },
+                                            error: function (data) {
+                                                console.log(data.responseJSON)
+                                            }
 
-                                    });
+                                        });
+                                    }
                                 } else {
                                     alert('Invalid date.');
                                 }
-                            })
+                            });
                         }
                     }
                 },
@@ -106,11 +118,11 @@ $(document).ready(function () {
                 {
                     url: `http://${location.host}/api/booking/${uuid}`,
                     method: 'GET',
-                    endParam:'',
+                    endParam: '',
                     startParam: '',
                 }
 
-                });
+            });
             calendar.render();
 
             var calendarjQ = $(calendarEl);
@@ -133,6 +145,6 @@ $(document).ready(function () {
                 console.log($(":file")[0].files[0]);
             })
 
-            }
-        });
+        }
     });
+});
