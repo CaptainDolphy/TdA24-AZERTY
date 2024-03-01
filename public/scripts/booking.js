@@ -29,9 +29,8 @@ $(document).ready(function () {
                 unselectCancel: '.fc-addEventButton-button, #form, .submit',
                 select: function (info) {
                     selected = info;
-                    if (selected != null) {
-                        document.getElementById("form").style.display = "block";
-                    }
+                    document.getElementById("form").style.display = "block";
+                    
                     $("#bttn.submit").on("click", function () {
 
                         console.log(selected)

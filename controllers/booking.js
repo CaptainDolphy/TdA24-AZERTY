@@ -124,7 +124,6 @@ module.exports.booking_post = async (req, res) => {
             }
 
             const insertCalendar = JSON.stringify([...serverCalendar, ...calendar]);
-            console.log("post")
 
             sql = `UPDATE calendars SET
                 data=?
