@@ -28,7 +28,7 @@ $(document).ready(function () {
                     endTime: '20:00',
                 },
                 slotDuration: '01:00',
-                unselectCancel: '.fc-addEventButton-button, #form',
+                unselectCancel: '.fc-addEventButton-button, #form, .submit',
                 select: function(info) {
                     selected = info;
                 },
@@ -40,17 +40,23 @@ $(document).ready(function () {
                     addEventButton: {
                         text: 'add event...',
                         click: function() {
-                            console.log(selected)
                             if (selected!= null) {
                                 document.getElementById("form").style.display = "block";
                             }
                             $("#bttn.submit").on("click", function () {
 
+                            console.log(selected)
                                 if (!isNaN(selected.start.valueOf())) { // valid?
                                         calendar.addEvent({
                                             title: `Schuzka s: ${$('#fname').val()} ${$('#lname').val()}`,
                                             start: selected.start,
                                             end: selected.end,
+                                            extendedProps: {
+                                                email: `${$('#email').val()}`,
+                                                number: `${$('#number').val()}`,
+                                                reltags: `${$('#reltags').val()}`,
+                                                message: `${$('#message').val()}`,
+                                            },
                                             allDay: false
                                         });
                                     selected = null;
@@ -60,7 +66,13 @@ $(document).ready(function () {
                                         var eventToPush = {
                                             title: event.title,
                                             start: event.start,
-                                            end: event.end
+                                            end: event.end,
+                                            extendedProps: {
+                                                email: event.extendedProps.email,
+                                                number: event.extendedProps.number,
+                                                reltags: event.extendedProps.reltags,
+                                                message: event.extendedProps.message,
+                                            }
                                         }
                                         jsonData.push(eventToPush);
                                     });

@@ -9,15 +9,16 @@ block content
     script(src="https://code.jquery.com/jquery-3.6.0.js")
     script(src="https://code.jquery.com/ui/1.13.2/jquery-ui.js")
     link(rel="stylesheet" href="/stylesheets/lecturer-style.css")
-
+    script(src="../../scripts/adminPanel.js")
+    link(rel="stylesheet" href="../../stylesheets/booking/booking-style.css")
+    link(rel="stylesheet" href="../../stylesheets/booking/header-style.css")
 
     #header
         img#logo(src="/images/TdA-logo/TeacherDigitalAgency_LOGO_white.png" alt="tda white logo" onclick="window.location='/'")
         h1#title="Lessons"
 
-    form#uploadForm(enctype="multipart/form-data")
-        input#file(type="file", accept=".ical, .ics")
-        #bttn="Submit"
+#bttn="Download"
+
 
     #calendar
 
