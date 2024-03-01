@@ -105,7 +105,7 @@ $(document).ready(function () {
                     selected = null;
                     document.getElementById("form").style.display = "none";
                 },
-                eventSources: 
+                eventSources:
                 [{
                     id: 1,
                     url: `http://${location.host}/api/booking/${uuid}`,
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
             var calendarjQ = $(calendarEl);
 
-            
+
 
         }
     });

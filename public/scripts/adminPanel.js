@@ -51,20 +51,39 @@ $(document).ready(function () {
 
             $("#bttn").on("click", function () {
 
-                $.post(`http://${location.host}/api/lecturers/${data.uuid}`,//tady musi byt k tomu ten auth header na to api
-                    {
-                        uuid: `${data.uuid}`,
-                        schedule: `${$(":file")[0].files[0]}`
+                $.ajax({
+                    type: 'post',
+                    data: {data:JSON.stringify([]),download: true},
+                    //beforeSend: function (request) {
+                        //    request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
+                        //},
+                    url: `http://${location.host}/api/booking/${uuid}`,
+                    success: function (data) {
+                        console.log(data)
+                        function download(file, data) {
+
+                            //creating an invisible element
+
+                            var element = document.createElement('a');
+                            element.setAttribute('href',
+                                'data:text/plain;charset=utf-8, '
+                                + encodeURIComponent(data));
+                            element.setAttribute('download', file);
+                            document.body.appendChild(element);
+                            element.click();
+                            document.body.removeChild(element);
+                        }
+                        var  filename=`schedule-${uuid}.ics`
+                        download(filename, data)
+                        //location.assign(data.redirect || '/')
                     },
-                    function (res) {
-                        console.log(res)
-                    })
-                    .fail(function (res) {
-                        console.log(res.responseJSON)
-                    })
+                    error: function (data) {
+                        console.log(data.responseJSON)
+                    }
+
+                });
 
 
-                console.log($(":file")[0].files[0]);
             })
 
             }

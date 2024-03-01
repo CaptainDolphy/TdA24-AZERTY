@@ -62,6 +62,8 @@ module.exports.booking_post = async (req, res) => {
             }
         }
         else {
+
+
             serverCalendar = JSON.parse(serverCalendar[0].data);
             //remove overlapping lessons (mistake or trolling in request)
             for (let j = 0; j < serverCalendar.length; j++) {
@@ -83,6 +85,44 @@ module.exports.booking_post = async (req, res) => {
                     }
                 }
             }
+
+
+            if (req.body.download) {
+
+                var ics = "BEGIN:VCALENDAR\n";
+                ics += "PRODID:-//TdA//Meeting\n"
+                ics += "VERSION:2.0\n"
+                for (const serverLesson of serverCalendar){
+
+                    function getDate(date) {
+
+                            var pre =
+                                date.getFullYear().toString() +
+                                ((date.getMonth() + 1)<10? "0" + (date.getMonth() + 1).toString():(date.getMonth() + 1).toString()) +
+                                ((date.getDate() + 1)<10? "0" + date.getDate().toString():date.getDate().toString());
+
+                            var post = ((date.getHours()<10?'0':'')+ date.getHours()) + ((date.getMinutes()<10?'0':'')+ date.getMinutes()) + "00";
+
+                            return pre + "T" + post;
+                    }
+                ics += "BEGIN:VEVENT\n"
+                ics += `UID:${URLuuid}--${serverCalendar.indexOf(serverLesson)}\n`
+                    ics += `ORGANIZER:MAil lecturera?\n`
+                    ics += `DTSTAMP:${getDate(new Date())}\n`
+                    ics += `DTSTART:${getDate(new Date(serverLesson.start))}\n`
+                    ics += `DTEND:${getDate(new Date(serverLesson.end))}\n`
+                    ics += "STATUS:CONFIRMED\n"
+                    ics += `CATEGORIES:${serverLesson.extendedProps.reltags}\n`
+                    ics += `SUMMARY:${serverLesson.title}\n`
+                    ics += `DESCRIPTION:Message: ${serverLesson.extendedProps.message}, Email:${serverLesson.extendedProps.mail}, Number:${serverLesson.extendedProps.number}\n`
+                    ics += "END:VEVENT\n"
+                }
+                ics += "END:VCALENDAR\n";
+
+                res.status(200).send(`${ics}`)
+                return
+            }
+
             const insertCalendar = JSON.stringify([...serverCalendar, ...calendar]);
             console.log("post")
 
