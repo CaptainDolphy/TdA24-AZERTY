@@ -70,7 +70,7 @@ $(document).ready(function () {
 
                             var element = document.createElement('a');
                             element.setAttribute('href',
-                                'data:text/plain;charset=utf-8, '
+                                'data:text/plain;charset=utf-8,'
                                 + encodeURIComponent(data));
                             element.setAttribute('download', file);
                             document.body.appendChild(element);
