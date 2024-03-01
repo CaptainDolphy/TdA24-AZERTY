@@ -21,8 +21,8 @@ module.exports.booking_get = async (req, res) => {
         else {
             calendar = calendar[0];
 
-            calendar.data = JSON.parse(calendar.data);
-            res.status(200).json({ calendar });
+            calendarData = JSON.parse(calendar.data);
+            res.status(200).json(calendarData);
         }
     });
 }
@@ -31,7 +31,8 @@ module.exports.booking_get = async (req, res) => {
 module.exports.booking_post = async (req, res) => {
     var URLuuid = req.params.uuid;
 
-    var calendar = req.body.data;
+    var calendar = JSON.parse(req.body.data);
+    console.log(calendar)
 
     sql = `SELECT * FROM calendars WHERE uuid=?`;
 
@@ -65,21 +66,26 @@ module.exports.booking_post = async (req, res) => {
             serverCalendar = JSON.parse(serverCalendar[0].data);
             //remove overlapping lessons (mistake or trolling in request)
             for (const serverLesson of serverCalendar) {
-                for (const [index, lesson] of calendar) {
-                    if (lesson.start == "" || lesson.end == "") {
-                        calendar[index].splice(index, 1);
+                for (index in calendar) {
+                    console.log(index)
+                    if (calendar[index].start == "" || calendar[index].end == "") {
+                        calendar.splice(index, 1);
                         break;
                     }
+                    calendar[index].start = new Date(calendar[index].start)
+                    calendar[index].end = new Date(calendar[index].end)
 
-                    if (lesson.start.getDate() == serverLesson.start.getDate() && lesson.start.getMonth() == serverLesson.start.getMonth() && lesson.start.getYear() == serverLesson.start.getYear()) {
-                        if (lesson.start < serverLesson.end && serverLesson.start < lesson.end) {
-                            calendar[index].splice(index, 1);
+                    serverLesson.start = new Date(serverLesson.start)
+                    serverLesson.end = new Date(serverLesson.end)
+
+                    if (calendar[index].start.getDate() == serverLesson.start.getDate() && calendar[index].start.getMonth() == serverLesson.start.getMonth() && calendar[index].start.getYear() == serverLesson.start.getYear()) {
+                        if (calendar[index].start < serverLesson.end && serverLesson.start < calendar[index].end) {
+                            calendar.splice(index, 1);
                             break;
                         }
                     }
                 }
             }
-
             const insertCalendar = JSON.stringify([...serverCalendar, ...calendar]);
 
             sql = `UPDATE calendars SET

@@ -91,7 +91,7 @@ module.exports.lecturer_post = async (req, res) => {
             });
         } else {
             var URLuuid = lecturer.uuid;
-            var calendar = req.body.data;
+            var calendar = [];
 
             sql = `SELECT * FROM calendars WHERE uuid=?`;
 
@@ -116,7 +116,6 @@ module.exports.lecturer_post = async (req, res) => {
                             }
                             else {
                                 console.log(`Successfully created calendar with uuid: ${URLuuid}`);
-                                res.status(200).json(calendar);
                             }
                         });
                     }

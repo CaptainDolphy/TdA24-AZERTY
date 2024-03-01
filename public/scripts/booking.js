@@ -7,7 +7,7 @@ $(document).ready(function () {
             request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
         },
         dataType: "json",
-        url: `http://${location.host}/api/lecturers/${uuid}`,
+        url: `http://${location.host}/api/booking/${uuid}`,
         success: function (data) {
 
             var selected=null;
@@ -28,50 +28,55 @@ $(document).ready(function () {
                     endTime: '20:00',
                 },
                 slotDuration: '01:00',
-
+                unselectCancel: '.fc-addEventButton-button, #form',
                 select: function(info) {
                     selected = info;
+                },
+                unselect: function(info) {
+                    selected = null;
                 },
 
                 customButtons: {
                     addEventButton: {
                         text: 'add event...',
                         click: function() {
+                            console.log(selected)
                             if (selected!= null) {
                                 document.getElementById("form").style.display = "block";
                             }
                             $("#bttn.submit").on("click", function () {
 
-
                                 if (!isNaN(selected.start.valueOf())) { // valid?
                                         calendar.addEvent({
-                                            title: `Schuzka s: ${$('#fname').val()} ${$('#lname').val()} `,
+                                            title: `Schuzka s: ${$('#fname').val()} ${$('#lname').val()}`,
                                             start: selected.start,
                                             end: selected.end,
                                             allDay: false
                                         });
-                                    alert('Great. Now, update your database...');
-                                    selected=null;
-                                    var jsonData = calendar.getEvents().map(function(event) {
-                                        return {
+                                    selected = null;
+                                    var events = calendar.getEvents();
+                                    var jsonData = [];
+                                    events.forEach((event, index) => {
+                                        var eventToPush = {
                                             title: event.title,
                                             start: event.start,
                                             end: event.end
-                                        };
+                                        }
+                                        jsonData.push(eventToPush);
                                     });
 
                                     console.log(jsonData);
                                     $.ajax({
                                         type: 'post',
-                                        data: jsonData,
-                                        beforeSend: function (request) {
-                                            request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
-                                        },
+                                        data: {data:JSON.stringify(jsonData)},
+                                        //beforeSend: function (request) {
+                                        //    request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
+                                        //},
                                         dataType: "json",
                                         url: `http://${location.host}/api/booking/${uuid}`,
                                         success: function (data) {
                                             console.log(data)
-                                            location.assign(data.redirect || '/')
+                                            //location.assign(data.redirect || '/')
                                         },
                                         error: function (data) {
                                             console.log(data.responseJSON)
@@ -89,7 +94,8 @@ $(document).ready(function () {
                 {
                     url: `http://${location.host}/api/booking/${uuid}`,
                     method: 'GET',
-                    extraParams:{uuid: `${uuid}`},
+                    endParam:'',
+                    startParam: '',
                 }
 
                 });
