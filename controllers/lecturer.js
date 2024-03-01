@@ -90,6 +90,38 @@ module.exports.lecturer_post = async (req, res) => {
                 "message": errors
             });
         } else {
+            var URLuuid = lecturer.uuid;
+            var calendar = req.body.data;
+
+            sql = `SELECT * FROM calendars WHERE uuid=?`;
+
+            app.db.all(sql, [URLuuid], (err, serverCalendar) => {
+                if (err || serverCalendar == "") {
+                    if (err) console.error(err);
+                    else if (serverCalendar == "") {
+                        sqlInsert = `INSERT INTO calendars(
+                            [uuid],
+                            [data]
+                        ) VALUES (
+                            ?,?
+                        )`;
+
+                        app.db.run(sqlInsert, [URLuuid, JSON.stringify(calendar)], (err) => {
+                            if (err) {
+                                const errors = handlers.handleErrorsApi(err);
+                                res.status(400).json({
+                                    "code": 400,
+                                    "message": errors
+                                });
+                            }
+                            else {
+                                console.log(`Successfully created calendar with uuid: ${URLuuid}`);
+                                res.status(200).json(calendar);
+                            }
+                        });
+                    }
+                }
+            });
             console.log(`Successfully added lecturer ${lecturer.first_name} ${lecturer.last_name} with uuid: ${lecturer.uuid}`);
             res.status(201).json(lecturer);
         }

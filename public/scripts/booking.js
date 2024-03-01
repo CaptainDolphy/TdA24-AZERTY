@@ -68,7 +68,7 @@ $(document).ready(function () {
                                             request.setRequestHeader("Authorization", 'Basic VGRBOmQ4RWY2IWRHR19wdg==');
                                         },
                                         dataType: "json",
-                                        url: `http://${location.host}/api/lecturers/${uuid}`,
+                                        url: `http://${location.host}/api/booking/${uuid}`,
                                         success: function (data) {
                                             console.log(data)
                                             location.assign(data.redirect || '/')
@@ -87,10 +87,9 @@ $(document).ready(function () {
                 },
                 events:
                 {
-                    url: `http://${location.host}/api/lecturers/${uuid}`,
-                    format: 'ical',
+                    url: `http://${location.host}/api/booking/${uuid}`,
                     method: 'GET',
-                    extraParams:{},
+                    extraParams:{uuid: `${uuid}`},
                 }
 
                 });

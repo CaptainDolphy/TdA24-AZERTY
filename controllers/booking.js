@@ -6,7 +6,7 @@ const handlers = require('../middleware/handlers.js');
 
 module.exports.booking_get = async (req, res) => {
     var URLuuid = req.params.uuid;
-
+    console.log(URLuuid)
     sql = `SELECT * FROM calendars WHERE uuid=?`;
 
     app.db.all(sql, [URLuuid], (err, calendar) => {
@@ -63,7 +63,7 @@ module.exports.booking_post = async (req, res) => {
         }
         else {
             serverCalendar = JSON.parse(serverCalendar[0].data);
-            //remove overlaping lessons (mistake or trolling in request)
+            //remove overlapping lessons (mistake or trolling in request)
             for (const serverLesson of serverCalendar) {
                 for (const [index, lesson] of calendar) {
                     if (lesson.start == "" || lesson.end == "") {
