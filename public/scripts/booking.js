@@ -60,7 +60,7 @@ $(document).ready(function () {
                                         message: `${$('#message').val()}`,
                                     },
                                     allDay: false
-                                });
+                                }, 1);
                                 selected = null;
                                 var events = calendar.getEvents();
                                 var jsonData = [];
@@ -105,36 +105,21 @@ $(document).ready(function () {
                     selected = null;
                     document.getElementById("form").style.display = "none";
                 },
-                events:
-                {
+                eventSources: 
+                [{
+                    id: 1,
                     url: `http://${location.host}/api/booking/${uuid}`,
                     method: 'GET',
                     endParam: '',
                     startParam: '',
-                }
+                }]
 
             });
             calendar.render();
 
             var calendarjQ = $(calendarEl);
 
-            $("#bttn").on("click", function () {
-
-                $.post(`http://${location.host}/api/lecturers/${data.uuid}`,//tady musi byt k tomu ten auth header na to api
-                    {
-                        uuid: `${data.uuid}`,
-                        schedule: `${$(":file")[0].files[0]}`
-                    },
-                    function (res) {
-                        console.log(res)
-                    })
-                    .fail(function (res) {
-                        console.log(res.responseJSON)
-                    })
-
-
-                console.log($(":file")[0].files[0]);
-            })
+            
 
         }
     });

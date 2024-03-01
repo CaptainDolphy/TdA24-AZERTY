@@ -64,27 +64,27 @@ module.exports.booking_post = async (req, res) => {
         else {
             serverCalendar = JSON.parse(serverCalendar[0].data);
             //remove overlapping lessons (mistake or trolling in request)
-            for (const serverLesson of serverCalendar) {
-                for (index in calendar) {
-                    if (calendar[index].start == "" || calendar[index].end == "") {
-                        calendar.splice(index, 1);
-                        break;
+            for (let j = 0; j < serverCalendar.length; j++) {
+                for (let i = 0; i < calendar.length; i++) {
+                    console.log(i)
+                    if (calendar[i].start == "" || calendar[i].end == "") {
+                        calendar.splice(i, 1);
                     }
-                    calendar[index].start = new Date(calendar[index].start)
-                    calendar[index].end = new Date(calendar[index].end)
+                    calendar[i].start = new Date(calendar[i].start)
+                    calendar[i].end = new Date(calendar[i].end)
 
-                    serverLesson.start = new Date(serverLesson.start)
-                    serverLesson.end = new Date(serverLesson.end)
+                    serverCalendar[j].start = new Date(serverCalendar[j].start)
+                    serverCalendar[j].end = new Date(serverCalendar[j].end)
 
-                    if (calendar[index].start.getDate() == serverLesson.start.getDate() && calendar[index].start.getMonth() == serverLesson.start.getMonth() && calendar[index].start.getYear() == serverLesson.start.getYear()) {
-                        if (calendar[index].start < serverLesson.end && serverLesson.start < calendar[index].end) {
-                            calendar.splice(index, 1);
-                            break;
+                    if (calendar[i].start.getDate() == serverCalendar[j].start.getDate() && calendar[i].start.getMonth() == serverCalendar[j].start.getMonth() && calendar[i].start.getYear() == serverCalendar[j].start.getYear()) {
+                        if (calendar[i].start < serverCalendar[j].end && serverCalendar[j].start < calendar[i].end) {
+                            calendar.splice(i, 1);
                         }
                     }
                 }
             }
             const insertCalendar = JSON.stringify([...serverCalendar, ...calendar]);
+            console.log("post")
 
             sql = `UPDATE calendars SET
                 data=?
