@@ -63,7 +63,7 @@ $(document).ready(function () {
                         //},
                     url: `http://${location.host}/api/booking/${uuid}`,
                     success: function (data) {
-                        console.log(data)
+                        //console.log(data)
                         function download(file, data) {
 
                             //creating an invisible element
