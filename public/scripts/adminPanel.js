@@ -26,6 +26,10 @@ $(document).ready(function () {
                     startTime: '8:00',
                     endTime: '20:00',
                 },
+                dateClick: function (info) {
+                    console.log(info)
+                    calendar.changeView('timeGridWeek', info.date);
+                },
                 slotDuration: '01:00',
                 unselectCancel: '.fc-addEventButton-button, #form',
                 select: function(info) {
